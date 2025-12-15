@@ -1,9 +1,9 @@
 const config = {
     db: {
       host: "localhost",
-      user: "rubrica",
-      password: "rubrica!",
-      database: "rubricadb",
+      user: "root",
+      password: "Tfovygv$185956",
+      database: "bowlingdb",
       connectTimeout: 60000
     }
   };
