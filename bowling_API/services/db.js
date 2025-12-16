@@ -15,7 +15,7 @@ async function getConnection() {
   return connection;
 }
 
-//Passo la connessionem una stringa SQL e dei parametri
+//Passo la connessione, una stringa SQL e dei parametri
 // (? sostituiti da un array di parametri)
 
 //Prende la connessione e chiama il metodo execute di mysql2
@@ -27,4 +27,4 @@ async function execute(connection, sql, params) {
 
 module.exports = { getConnection, execute }
 
-//Sono 2 chiamate await --> asincrone
+//Sono 2 chiamate await (TCP/IP verso un DB) --> asincrone

@@ -8,4 +8,5 @@ const config = {
     }
   };
 
-  module.exports = config;
+//Esporto l'oggetto di config per farlo leggere agli altri file JS
+module.exports = config;
