@@ -1,7 +1,12 @@
 const express = require('express')
 var cors=require('cors');
-const userRouter = require("./routes/user");
-const contactRouter = require("./routes/contact");
+
+const atletaRouter = require("./routes/atleta");
+const pallaRouter = require("./routes/palla");
+const partecipaRouter = require("./routes/partecipa");
+const partitaRouter = require("./routes/partita");
+const torneoRouter = require("./routes/torneo");
+const utenteRouter = require("./routes/utente");
 
 const app = express()
 const port = 3000
@@ -15,8 +20,12 @@ app.use(
   })
 );
 
-app.use(contextPath, userRouter);
-app.use(contextPath, contactRouter);
+app.use(contextPath, atletaRouter);
+app.use(contextPath, pallaRouter);
+app.use(contextPath, partecipaRouter);
+app.use(contextPath, partitaRouter);
+app.use(contextPath, torneoRouter);
+app.use(contextPath, utenteRouter);
 
 app.all('*', function(req, res){
   res.status(404);
