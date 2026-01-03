@@ -3,3 +3,5 @@ const db = require('../services/db');
 const partecipaDAO = require('../dao/partecipaDAO');
 
 const router = express.Router();
+
+module.exports = router;
