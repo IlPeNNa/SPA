@@ -1,0 +1,9 @@
+<section class="home" *ngIf="!loggedUser; else benvenuto">
+  <h2>Benvenuto. Fai il login.</h2>
+</section>
+
+<ng-template #benvenuto>
+  <section class="home">
+    <h2>Benvenuto {{ loggedUser?.username }}!</h2>
+  </section>
+</ng-template>

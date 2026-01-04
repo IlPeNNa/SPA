@@ -1,0 +1,30 @@
+/* Contenitore principale */
+.home {
+  padding: 20px;
+  margin-top: 1rem;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+/* Titolo */
+.home h2 {
+  color: #a32900;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Messaggio benvenuto */
+.home span {
+  background-color: #a32900;
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+/* Errore login */
+.errore {
+  color: red;
+  font-size: 13px;
+  margin-top: 10px;
+}
