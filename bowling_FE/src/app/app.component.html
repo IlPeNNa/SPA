@@ -8,9 +8,9 @@
   <section class="login" *ngIf="!loggedUser; else benvenuto">
     <form (ngSubmit)="login()" #form="ngForm">
       <label>Username:</label>
-      <input type="text" name="username" [(ngModel)]="username" required />
+      <input type="text" name="Username" [(ngModel)]="Username" required />
       <label>Password:</label>
-      <input type="password" name="password" [(ngModel)]="password" required />
+      <input type="password" name="Password" [(ngModel)]="Password" required />
       <button type="submit" [disabled]="form.invalid">Ok</button>
     </form>
     <p class="errore" *ngIf="errore">{{ errore }}</p>
@@ -19,7 +19,7 @@
 
 <ng-template #benvenuto>
   <section class="login">
-    <span>Benvenuto {{ loggedUser?.username }}</span>
+    <span>Benvenuto {{ loggedUser?.Username }}</span>
   </section>
 </ng-template>
 

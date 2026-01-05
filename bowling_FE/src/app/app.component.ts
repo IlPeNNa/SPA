@@ -1,13 +1,54 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common'; //Contiene ngIf, ngFor, ...
+import { RouterLink, RouterOutlet, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms'; //Contiene ngModel per i form
+import { SessionService } from './servizi/session.service'; //Servizio per la gestione della sessione utente
+import { UserService } from './servizi/utente.service'; //Servizio per la gestione degli utenti
+import { Utente } from './modelli/utente.models'; //Modello User
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [CommonModule, RouterOutlet, RouterLink, FormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  title = 'bowling';
+
+  Username: string = '';
+  Password: string = '';
+  errore: string = '';
+  loggedUser: Utente | null = null;
+
+  constructor(private session: SessionService, private router: Router, private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.loggedUser=this.session.getLoggedUser();
+  }
+
+  login() {
+    this.errore = '';
+    this.userService.getUserByUsername(this.Username).subscribe({
+      next: (users: Utente[]) => {
+        let user:Utente=users[0];
+        if (user && user.Password === this.Password) {
+          this.session.setLoggedUser(user);
+          this.loggedUser=this.session.getLoggedUser();
+          this.router.navigate(['/tornei']);
+        } else {
+          this.errore = 'Password errata';
+        }
+      },
+      error: () => {
+        this.errore = 'Utente non trovato';
+      }
+    });
+  }
+
+  logout() {
+    this.session.clearLoggedUser();
+    this.loggedUser=this.session.getLoggedUser();
+    this.router.navigate(['/home']);
+  }
 }
