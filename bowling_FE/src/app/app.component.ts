@@ -35,7 +35,7 @@ export class AppComponent {
         if (user && user.Password === this.Password) {
           this.session.setLoggedUser(user);
           this.loggedUser=this.session.getLoggedUser();
-          this.router.navigate(['/tornei']);
+          this.router.navigate(['/atleti']);
         } else {
           this.errore = 'Password errata';
         }

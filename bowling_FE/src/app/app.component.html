@@ -1,10 +1,16 @@
 <header class="clearfix">
+
   <h1>Bowling</h1>
+
   <nav class="clearfix">
     <a routerLink="/home">Home</a>
+    <a *ngIf="loggedUser" routerLink="/atleti">Atleti</a>
     <a *ngIf="loggedUser" routerLink="/tornei">Tornei</a>
+    <a *ngIf="loggedUser && (loggedUser.Permessi === 'atleta')" routerLink="/profilo">Profilo</a>
+    <a *ngIf="loggedUser && (loggedUser.Permessi === 'atleta')" routerLink="/arsenale">Arsenale</a>
     <a *ngIf="loggedUser" href="#" (click)="logout()">Logout</a>
   </nav>
+
   <section class="login" *ngIf="!loggedUser; else benvenuto">
     <form (ngSubmit)="login()" #form="ngForm">
       <label>Username:</label>
@@ -15,6 +21,7 @@
     </form>
     <p class="errore" *ngIf="errore">{{ errore }}</p>
   </section>
+
 </header>
 
 <ng-template #benvenuto>
