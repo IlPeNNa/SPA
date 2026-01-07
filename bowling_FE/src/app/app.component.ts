@@ -4,7 +4,7 @@ import { RouterLink, RouterOutlet, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'; //Contiene ngModel per i form
 import { SessionService } from './servizi/session.service'; //Servizio per la gestione della sessione utente
 import { UserService } from './servizi/utente.service'; //Servizio per la gestione degli utenti
-import { Utente } from './modelli/utente.models'; //Modello User
+import { Utente } from './modelli/utente.model'; //Modello User
 
 @Component({
   selector: 'app-root',
@@ -25,6 +25,10 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.loggedUser=this.session.getLoggedUser();
+  }
+
+  resetErrore(): void {
+    this.errore = '';
   }
 
   login() {

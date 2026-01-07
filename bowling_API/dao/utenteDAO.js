@@ -1,22 +1,32 @@
 const db = require('../services/db');
 
-//Moduli da mettere a posto in seguito
+const findUsers = async function (connection,reqQuery) {
 
-const createUtente = async function(connection, utente) {
+  sql = "SELECT * FROM utente";
+  params=[];
+
+  queryKeys = Object.keys(reqQuery);
+  for (i = 0; i < queryKeys.length; i++) {
+    sql+=(i==0)?" WHERE ":" AND ";
+    sql += queryKeys[i] + "= ?";
+    params.push(reqQuery[queryKeys[i]]);
+  }
+
+  const rows = await db.execute(connection,sql,params);
+
+  return (!rows ? [] : rows);
 
 }
 
-const updateUtente = async function(connection, utente) {
-    
-}  
+const findUserById = async function (connection, ID_utente) {
 
-//Cancellazione logica con Deleted = 'Y'
-const deleteUtente = async function(connection, ID_utente) {
-
+  sql = "SELECT * FROM utente WHERE ID_utente = ? ";
+  params=[ID_utente];
+  const rows = await db.execute(connection,sql,params);
+  return (!rows ? [] : rows);
 }
 
 module.exports = {
-    createUtente,
-    updateUtente,
-    deleteUtente
+    findUsers,
+    findUserById
 };

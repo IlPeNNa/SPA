@@ -1,14 +1,6 @@
 /* Reset locale */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-a,
-a:link,
-a:active,
-a:visited {
+a {
   text-decoration: none;
   cursor: pointer;
 }
@@ -22,46 +14,43 @@ a:visited {
 
 /* Header */
 header {
-  background: #a32900;
-  padding-top: 10px;
+  background: linear-gradient(#c63403, #994fd2);
 }
 
 header h1 {
-  padding: 20px 14px 0;
+  padding: 15px 10px 10px 15px;
   font-size: 2.2em;
-  font-weight: 900;
-  color: white;
+  font-weight: 600;
+  font-style: italic;
+  font-family: 'Courier New', Courier, monospace;
+  color: rgb(0, 0, 0);
 }
 
 /* Navigation */
 header nav {
   float: left;
-  padding-top: 15px;
 }
 
 header nav a {
   display: inline-block;
-  color: white;
-  width: 100px;
+  color: rgb(0, 0, 0);
+  width: 90px;
   text-align: center;
   font-size: 14px;
   text-transform: uppercase;
-  padding: 4px 0 5px;
-  background: linear-gradient(#daa999, #EDD4CC);
-  border-top: solid 1px #daa999;
-  margin-right: 5px;
+  padding: 5px 0 5px 0;
+  background: linear-gradient(#d38a72, #EDD4CC);
+  margin-right: 7px;
 }
 
 header nav a:hover {
   color: #f9dcb4;
   background: linear-gradient(#621900, #822100);
-  border-top: solid 1px #210800;
 }
 
 /* Login */
 .login {
   float: right;
-  padding-top: 14px;
   width: 580px;
 }
 
@@ -69,8 +58,9 @@ header nav a:hover {
 .login label {
   color: white;
   float: left;
-  padding: 6px 12px 0px 7px;
+  padding: 5px 5px 5px 10px;
   font-size: 13px;
+  text-transform: uppercase;
 }
 
 /* Campi di input */
@@ -79,26 +69,23 @@ header nav a:hover {
   float: left;
   height: 18px;
   width: 125px;
-  border: 1px solid #A32900;
-  border-radius: 4px;
-  margin-top: 2px;
+  border: 1px double rgb(232, 170, 14);
+  border-radius: 2px;
+  margin-top: 1px;
   font-size: 13px;
-}
-
-.login input:focus {
-  outline: none;
 }
 
 /* Bottone login */
 .login button {
-  background-color: #A32900;
+  background: none;
   color: white;
+  text-align: left;
   border: 0;
   cursor: pointer;
   float: left;
   overflow: hidden;
   padding: 6px 12px 0px 7px;
-  width: 26px;
+  width: 120px;
   font-size: 13px;
 }
 
@@ -106,20 +93,21 @@ header nav a:hover {
 .errore {
   color: white;
   float: left;
-  padding: 6px 15px 0px 7px;
+  padding: 0px 15px 0px 7px;
   font-size: 13px;
 }
 
 /* Messaggio benvenuto */
 .login span {
   color: white;
+  font-style: italic;
   float: right;
-  padding: 6px 15px 0px 7px;
-  font-size: 13px;
+  padding: 0px 15px 0px 7px;
+  font-size: 1.5em;
 }
 
 /* Main */
 main {
   background-color: #fff;
-  padding: 10px 18px;
+  padding: 0px 10px;
 }

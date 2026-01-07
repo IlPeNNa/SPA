@@ -1,6 +1,6 @@
 <header class="clearfix">
 
-  <h1>Bowling</h1>
+  <h1>ASD BOWLING FERRARA</h1>
 
   <nav class="clearfix">
     <a routerLink="/home">Home</a>
@@ -13,20 +13,19 @@
 
   <section class="login" *ngIf="!loggedUser; else benvenuto">
     <form (ngSubmit)="login()" #form="ngForm">
-      <label>Username:</label>
-      <input type="text" name="Username" [(ngModel)]="Username" required />
-      <label>Password:</label>
-      <input type="password" name="Password" [(ngModel)]="Password" required />
-      <button type="submit" [disabled]="form.invalid">Ok</button>
+      <label>Username :</label>
+      <input type="text" name="Username" [(ngModel)]="Username" (ngModelChange)="resetErrore()" required />
+      <label>Password :</label>
+      <input type="password" name="Password" [(ngModel)]="Password" (ngModelChange)="resetErrore()" required />
+      <button type="submit" [hidden]="form.invalid">{{ errore || 'Ok' }}</button>
     </form>
-    <p class="errore" *ngIf="errore">{{ errore }}</p>
   </section>
 
 </header>
 
 <ng-template #benvenuto>
   <section class="login">
-    <span>Benvenuto {{ loggedUser?.Username }}</span>
+    <span>Benvenuto {{ loggedUser?.Username }}!</span>
   </section>
 </ng-template>
 

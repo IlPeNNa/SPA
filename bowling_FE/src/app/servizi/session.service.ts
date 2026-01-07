@@ -1,6 +1,6 @@
 // ===== File: servizi/session.service.ts =====
 import { Injectable } from '@angular/core';
-import { Utente } from '../modelli/utente.models';
+import { Utente } from '../modelli/utente.model';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
