@@ -11,6 +11,7 @@ import { Utente } from '../../modelli/utente.model';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent {
 
   loggedUser: Utente | null = null;

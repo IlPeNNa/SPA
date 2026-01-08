@@ -15,6 +15,7 @@ export const routes: Routes = [
   { path: 'profilo', component: InfoProfiloComponent },
   { path: 'profilo/modifica/:id', component: FormProfiloComponent },
   { path: 'tornei', component: ListaTorneiComponent },
+  { path: 'tornei/nuovo', component: FormTorneiComponent },
   { path: 'tornei/modifica/:id', component: FormTorneiComponent },
   { path: 'atleti', component: ListaAtletiComponent },
   { path: 'atleti/modifica/:id', component: FormAtletiComponent },

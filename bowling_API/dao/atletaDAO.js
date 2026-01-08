@@ -65,6 +65,7 @@ const createAtleta = async function (connection, atleta) {
 }
 
 const updateAtleta = async function (connection, atleta) {
+
     const sql = `UPDATE atleta SET Nome = ?, Cognome = ?, Data_nascita = ?, Stile_gioco = ?,
                 Braccio_dominante = ?, Sesso = ?, ID_utente = ?
                 WHERE ID_atleta = ?`;
@@ -78,6 +79,7 @@ const updateAtleta = async function (connection, atleta) {
 }
 
 const deleteAtleta = async function (connection, ID_atleta) {
+    
   const sql = "UPDATE atleta SET Deleted= 'Y' WHERE ID_atleta = ?";
   const params = [ID_atleta];
 
