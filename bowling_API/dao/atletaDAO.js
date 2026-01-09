@@ -88,8 +88,29 @@ const deleteAtleta = async function (connection, ID_atleta) {
   return (result.affectedRows > 0);
 }
 
-//WIP
+const getAllAtleti = async function (connection) {
+    
+  const sql = "SELECT * FROM atleta WHERE Deleted = 'N'";
+  const params = [];
+
+  const rows = await db.execute(connection, sql, params);
+
+  return (!rows ? [] : rows);
+}
+
+const getAtletaById = async function (connection, ID_atleta) {
+
+  const sql = "SELECT * FROM atleta WHERE ID_atleta = ? AND Deleted = 'N'";
+  const params = [ID_atleta];
+  const rows = await db.execute(connection, sql, params);
+
+  return (!rows ? [] : rows);
+}
 
 module.exports = {
-    createAtleta, updateAtleta, deleteAtleta
+    createAtleta,
+    updateAtleta,
+    deleteAtleta,
+    getAllAtleti,
+    getAtletaById
 };

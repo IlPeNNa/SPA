@@ -40,8 +40,19 @@ const deletePalla = async function(connection, ID_palla) {
     return (result.affectedRows > 0);
 }
 
+const getPalleByAtleta = async function(connection, ID_atleta) {
+
+    const sql = "SELECT * FROM palla WHERE ID_atleta = ? AND Deleted = 'N'";
+    const params = [ID_atleta];
+    
+    const rows = await db.execute(connection, sql, params);
+    
+    return (!rows ? [] : rows);
+}
+
 module.exports = {
     insertPalla,
     updatePalla,
-    deletePalla
+    deletePalla,
+    getPalleByAtleta
 };
