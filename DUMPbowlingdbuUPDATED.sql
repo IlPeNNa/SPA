@@ -31,7 +31,7 @@ CREATE TABLE `atleta` (
   `Braccio_dominante` char(2) DEFAULT NULL,
   `Sesso` char(1) DEFAULT NULL,
   `ID_utente` int NOT NULL,
-  `Deleted` char(1) DEFAULT NULL,
+  `Deleted` char(1) DEFAULT 'N',
   PRIMARY KEY (`ID_atleta`),
   KEY `ID_utente_idx` (`ID_utente`),
   CONSTRAINT `ID_utente` FOREIGN KEY (`ID_utente`) REFERENCES `utente` (`ID_utente`) ON UPDATE CASCADE
@@ -65,6 +65,7 @@ CREATE TABLE `palla` (
   `RG` decimal(3,2) DEFAULT NULL,
   `Differenziale` decimal(4,3) DEFAULT NULL,
   `PSA` decimal(4,3) DEFAULT NULL,
+  `Deleted` char(1) DEFAULT 'N',
   PRIMARY KEY (`ID_palla`),
   KEY `ID_atleta_idx` (`ID_atleta`),
   CONSTRAINT `ID_atleta` FOREIGN KEY (`ID_atleta`) REFERENCES `atleta` (`ID_atleta`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -77,7 +78,7 @@ CREATE TABLE `palla` (
 
 LOCK TABLES `palla` WRITE;
 /*!40000 ALTER TABLE `palla` DISABLE KEYS */;
-INSERT INTO `palla` VALUES (1,1,'Roto Grip','Nuclear Cell','Asimmetrico',13,2.57,0.032,0.010),(2,1,'Storm','Typhoon','Simmetrico',13,2.58,0.047,NULL),(3,1,'Storm','Phaze II','Simmetrico',13,2.59,0.045,NULL),(4,1,'Storm','Phaze II Pearl','Simmetrico',13,2.59,0.045,NULL),(5,1,'900 Global','Origin EX','Asimmetrico',13,2.56,0.034,0.011),(6,1,'Storm','!Q Tour A.I.','Simmetrico',13,2.58,0.047,NULL),(7,1,'Roto Grip','Rockstar','Simmetrico',13,2.58,0.047,NULL),(8,1,'Roto Grip','RST Hyperdrive Pearl','Asimmetrico',13,2.56,0.034,0.011),(9,1,'Roto Grip','Rockstar Amped','Simmetrico',13,2.58,0.047,NULL),(10,1,'Storm','!Q Tour 78/U','Simmetrico',13,2.59,0.045,NULL),(11,2,'Storm','Equinox Solid','Asimmetrico',15,2.48,0.054,0.018),(12,2,'Storm','Next Factor','Asimmetrico',15,2.56,0.051,0.017),(13,2,'Storm','Ion Max','Asimmetrico',15,2.47,0.055,0.014),(14,2,'Storm','!Q Tour 78/U','Simmetrico',15,2.49,0.029,NULL),(15,2,'Storm','Phaze II Pearl','Simmetrico',15,2.48,0.051,NULL),(16,2,'Roto Grip','Rockstar Amped','Simmetrico',15,2.48,0.050,NULL),(17,2,'900 Global','Viking','Asimmetrico',15,2.51,0.052,0.016),(18,2,'Hammer','Purple Pearl Urethane','Simmetrico',15,2.65,0.015,NULL),(19,2,'Hammer','Black Widow 3.0','Asimmetrico',15,2.50,0.058,0.016),(20,2,'Storm','Hy-Road 40','Simmetrico',15,2.57,0.046,NULL);
+INSERT INTO `palla` VALUES (1,1,'Roto Grip','Nuclear Cell','Asimmetrico',13,2.57,0.032,0.010,'N'),(2,1,'Storm','Typhoon','Simmetrico',13,2.58,0.047,NULL,'N'),(3,1,'Storm','Phaze II','Simmetrico',13,2.59,0.045,NULL,'N'),(4,1,'Storm','Phaze II Pearl','Simmetrico',13,2.59,0.045,NULL,'N'),(5,1,'900 Global','Origin EX','Asimmetrico',13,2.56,0.034,0.011,'N'),(6,1,'Storm','!Q Tour A.I.','Simmetrico',13,2.58,0.047,NULL,'N'),(7,1,'Roto Grip','Rockstar','Simmetrico',13,2.58,0.047,NULL,'N'),(8,1,'Roto Grip','RST Hyperdrive Pearl','Asimmetrico',13,2.56,0.034,0.011,'N'),(9,1,'Roto Grip','Rockstar Amped','Simmetrico',13,2.58,0.047,NULL,'N'),(10,1,'Storm','!Q Tour 78/U','Simmetrico',13,2.59,0.045,NULL,'N'),(11,2,'Storm','Equinox Solid','Asimmetrico',15,2.48,0.054,0.018,'N'),(12,2,'Storm','Next Factor','Asimmetrico',15,2.56,0.051,0.017,'N'),(13,2,'Storm','Ion Max','Asimmetrico',15,2.47,0.055,0.014,'N'),(14,2,'Storm','!Q Tour 78/U','Simmetrico',15,2.49,0.029,NULL,'N'),(15,2,'Storm','Phaze II Pearl','Simmetrico',15,2.48,0.051,NULL,'N'),(16,2,'Roto Grip','Rockstar Amped','Simmetrico',15,2.48,0.050,NULL,'N'),(17,2,'900 Global','Viking','Asimmetrico',15,2.51,0.052,0.016,'N'),(18,2,'Hammer','Purple Pearl Urethane','Simmetrico',15,2.65,0.015,NULL,'N'),(19,2,'Hammer','Black Widow 3.0','Asimmetrico',15,2.50,0.058,0.016,'N'),(20,2,'Storm','Hy-Road 40','Simmetrico',15,2.57,0.046,NULL,'N');
 /*!40000 ALTER TABLE `palla` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +105,7 @@ CREATE TABLE `partecipa` (
 
 LOCK TABLES `partecipa` WRITE;
 /*!40000 ALTER TABLE `partecipa` DISABLE KEYS */;
-INSERT INTO `partecipa` VALUES (2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1);
+INSERT INTO `partecipa` VALUES (2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(2,2),(3,2),(5,2),(6,2),(1,4),(2,4),(4,4),(7,4),(8,4),(9,4);
 /*!40000 ALTER TABLE `partecipa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +135,7 @@ CREATE TABLE `partita` (
 
 LOCK TABLES `partita` WRITE;
 /*!40000 ALTER TABLE `partita` DISABLE KEYS */;
-INSERT INTO `partita` VALUES (1,2,1,230),(1,3,1,200),(1,5,1,214),(1,6,1,246),(1,7,1,235),(2,2,1,255),(2,3,1,234),(2,5,1,235),(2,6,1,234),(2,7,1,215),(3,2,1,190),(3,3,1,218),(3,5,1,261),(3,6,1,213),(3,7,1,241),(4,2,1,202),(4,3,1,170),(4,5,1,169),(4,6,1,255),(4,7,1,199),(5,2,1,230),(5,3,1,190),(5,5,1,198),(5,6,1,198),(5,7,1,239),(6,2,1,245),(6,3,1,256),(6,5,1,231),(6,6,1,197),(6,7,1,300),(7,2,1,223),(7,3,1,235),(7,5,1,220),(7,6,1,219),(7,7,1,237),(8,2,1,269),(8,3,1,267),(8,5,1,215),(8,6,1,249),(8,7,1,222);
+INSERT INTO `partita` VALUES (1,1,4,139),(1,2,1,230),(1,2,2,219),(1,2,4,220),(1,3,1,200),(1,3,2,279),(1,4,4,215),(1,5,1,214),(1,5,2,207),(1,6,1,246),(1,6,2,218),(1,7,1,235),(1,7,4,210),(1,8,4,213),(1,9,4,219),(2,1,4,145),(2,2,1,255),(2,2,2,276),(2,2,4,235),(2,3,1,234),(2,3,2,179),(2,4,4,223),(2,5,1,235),(2,5,2,195),(2,6,1,234),(2,6,2,233),(2,7,1,215),(2,7,4,234),(2,8,4,239),(2,9,4,263),(3,1,4,181),(3,2,1,190),(3,2,2,245),(3,2,4,247),(3,3,1,218),(3,3,2,223),(3,4,4,243),(3,5,1,261),(3,5,2,243),(3,6,1,213),(3,6,2,300),(3,7,1,241),(3,7,4,213),(3,8,4,179),(3,9,4,286),(4,1,4,169),(4,2,1,202),(4,2,2,239),(4,2,4,169),(4,3,1,170),(4,3,2,231),(4,4,4,179),(4,5,1,169),(4,5,2,270),(4,6,1,255),(4,6,2,227),(4,7,1,199),(4,7,4,256),(4,8,4,189),(4,9,4,241),(5,1,4,149),(5,2,1,230),(5,2,2,299),(5,2,4,197),(5,3,1,190),(5,3,2,214),(5,4,4,199),(5,5,1,198),(5,5,2,256),(5,6,1,198),(5,6,2,190),(5,7,1,239),(5,7,4,192),(5,8,4,177),(5,9,4,202),(6,1,4,171),(6,2,1,245),(6,2,2,217),(6,2,4,231),(6,3,1,256),(6,3,2,256),(6,4,4,214),(6,5,1,231),(6,5,2,219),(6,6,1,197),(6,6,2,214),(6,7,1,300),(6,7,4,200),(6,8,4,231),(6,9,4,237),(7,2,1,223),(7,3,1,235),(7,5,1,220),(7,6,1,219),(7,7,1,237),(8,2,1,269),(8,3,1,267),(8,5,1,215),(8,6,1,249),(8,7,1,222);
 /*!40000 ALTER TABLE `partita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +154,7 @@ CREATE TABLE `torneo` (
   `Data_fine` date DEFAULT NULL,
   `Numero_partite` int DEFAULT NULL,
   `Montepremi` decimal(10,2) DEFAULT NULL,
-  `Deleted` char(1) DEFAULT NULL,
+  `Deleted` char(1) DEFAULT 'N',
   PRIMARY KEY (`ID_torneo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -164,7 +165,7 @@ CREATE TABLE `torneo` (
 
 LOCK TABLES `torneo` WRITE;
 /*!40000 ALTER TABLE `torneo` DISABLE KEYS */;
-INSERT INTO `torneo` VALUES (1,'2025 U.S. Open','Professionista','2025-01-27','2025-02-02',8,350000.00,'N'),(2,'PBA Players Championship','Professionista','2025-04-12','2025-04-13',6,200000.00,'N');
+INSERT INTO `torneo` VALUES (1,'2025 U.S. Open','Professionista','2025-01-27','2025-02-02',8,350000.00,'N'),(2,'PBA Players Championship','Professionista','2025-04-12','2025-04-13',6,200000.00,'N'),(3,'Coppa Italia ','Eccellenza','2025-12-14','2025-12-14',6,50000.00,'N'),(4,'Campionato Italiano Singolo','Esordiente','2026-01-11','2026-01-11',6,2500.00,'N'),(5,'Pete Weber Missouri Classic','Cadetto','2025-08-08','2025-08-10',4,55000.00,'N'),(6,'2026 USBC Open Championships','Professionista','2026-03-14','2026-03-19',6,175000.00,'N');
 /*!40000 ALTER TABLE `torneo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +181,7 @@ CREATE TABLE `utente` (
   `Username` varchar(45) DEFAULT NULL,
   `Password` varchar(45) DEFAULT NULL,
   `Permessi` varchar(45) DEFAULT NULL,
-  `Deleted` char(1) DEFAULT NULL,
+  `Deleted` char(1) DEFAULT 'N',
   PRIMARY KEY (`ID_utente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -204,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-27 10:22:23
+-- Dump completed on 2026-01-09 11:06:48
