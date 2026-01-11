@@ -27,6 +27,7 @@ const getStatisticheAtleta = async function(connection, ID_atleta) {
     
     const rows = await db.execute(connection, sql, params);
     
+    // Se l'atleta non ha partite, ritorna zeri
     return (!rows || rows.length === 0) ? { Numero_partite: 0, Totale_punti: 0, Media: 0 } : rows[0];
 }
 

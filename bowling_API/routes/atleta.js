@@ -2,114 +2,139 @@ const express = require('express');
 const db = require('../services/db');
 const atletaDAO = require('../dao/atletaDAO');
 const partitaDAO = require('../dao/partitaDAO');
+const counterDAO = require('../dao/counterDAO');
 
 const router = express.Router();
 
 // GET /atleti - Recupera tutti gli atleti
-router.get('/atleti', async (req, res) => {
-    let connection;
+router.get('/atleti', async function(req, res) {
+    conn=await db.getConnection();
+    await conn.beginTransaction();
+    res.setHeader('Content-Type', 'application/json');
     try {
-        connection = await db.getConnection();
-        const atleti = await atletaDAO.getAllAtleti(connection);
-        res.status(200).json(atleti);
+        res.json(await atletaDAO.getAllAtleti(conn, req.query));
+        await conn.commit();
     } catch (error) {
-        console.error('Errore nel recupero degli atleti:', error);
-        res.status(500).json({ error: 'Errore nel recupero degli atleti' });
+        console.error(`routes/utenti.js:`, error.message, error.stack);
+        await conn.rollback();
+        res.status(400);
+        res.json({erroreMsg: error.message});
     } finally {
-        await connection.close();
+        await conn.close();
     }
 });
 
 // GET /atleti/:ID_atleta - Recupera un atleta specifico con statistiche
 router.get('/atleti/:ID_atleta', async (req, res) => {
-    let connection;
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+    res.setHeader('Content-Type', 'application/json');
     try {
-        connection = await db.getConnection();
-        const atleta = await atletaDAO.getAtletaById(connection, req.params.ID_atleta);
+        const atleta = await atletaDAO.getAtletaById(conn, req.params.ID_atleta);
         if (atleta.length === 0) {
-            res.status(404).json({ error: 'Atleta non trovato' });
-        } else {
-            // Recupera le statistiche dell'atleta
-            const statistiche = await partitaDAO.getStatisticheAtleta(connection, req.params.ID_atleta);
-            
-            // Combina i dati dell'atleta con le statistiche (esclusi gli ID)
-            const atletaCompleto = {
-                Nome: atleta[0].Nome,
-                Cognome: atleta[0].Cognome,
-                Data_nascita: atleta[0].Data_nascita,
-                Stile_gioco: atleta[0].Stile_gioco,
-                Braccio_dominante: atleta[0].Braccio_dominante,
-                Sesso: atleta[0].Sesso,
-                Numero_partite: statistiche.Numero_partite || 0,
-                Totale_punti: statistiche.Totale_punti || 0,
-                Media: statistiche.Media ? parseFloat(statistiche.Media.toFixed(2)) : 0
-            };
-            
-            res.status(200).json(atletaCompleto);
+            await conn.rollback();
+            res.status(404);
+            return res.json({ erroreMsg: 'Atleta non trovato' });
         }
+        // Recupera le statistiche dell'atleta
+        const statistiche = await partitaDAO.getStatisticheAtleta(conn, req.params.ID_atleta);
+        
+        // Combina i dati dell'atleta con le statistiche (esclusi gli ID)
+        const atletaCompleto = {
+            Nome: atleta[0].Nome,
+            Cognome: atleta[0].Cognome,
+            Data_nascita: atleta[0].Data_nascita,
+            Stile_gioco: atleta[0].Stile_gioco,
+            Braccio_dominante: atleta[0].Braccio_dominante,
+            Sesso: atleta[0].Sesso,
+            Numero_partite: statistiche.Numero_partite || 0,
+            Totale_punti: statistiche.Totale_punti || 0,
+            Media: statistiche.Media ? parseFloat(statistiche.Media.toFixed(2)) : 0
+        };
+        
+        res.json(atletaCompleto);
+        await conn.commit();
     } catch (error) {
-        console.error('Errore nel recupero dell\'atleta:', error);
-        res.status(500).json({ error: 'Errore nel recupero dell\'atleta' });
+        console.error(`routes/atleta.js:`, error.message, error.stack);
+        await conn.rollback();
+        res.status(400);
+        res.json({ erroreMsg: error.message });
     } finally {
-        await connection.close();
+        await conn.close();
     }
 });
 
 // POST /atleti - Crea un nuovo atleta
 router.post('/atleti', async (req, res) => {
-    let connection;
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+    res.setHeader('Content-Type', 'application/json');
     try {
-        connection = await db.getConnection();
-        const nuovoAtleta = await atletaDAO.createAtleta(connection, req.body);
-        if (nuovoAtleta) {
-            res.status(201).json(nuovoAtleta);
+        atleta = req.body;
+        nextId = await counterDAO.nextId(conn, 'atleta');
+        atleta.ID_atleta = nextId;
+        nuovoAtleta = await atletaDAO.createAtleta(conn, atleta);
+        if (nuovoAtleta != null) {
+            res.status(201);
+            res.json(nuovoAtleta);
         } else {
-            res.status(400).json({ error: 'Errore nella creazione dell\'atleta' });
+            res.status(500);
         }
+        await conn.commit();
     } catch (error) {
-        console.error('Errore nella creazione dell\'atleta:', error);
-        res.status(500).json({ error: 'Errore nella creazione dell\'atleta' });
+        console.error(`routes/atleta.js:`, error.message, error.stack);
+        await conn.rollback();
+        res.status(400);
+        res.json({ erroreMsg: error.message });
     } finally {
-        await connection.close();
+        await conn.close();
     }
 });
 
 // PUT /atleti/:ID_atleta - Modifica un atleta esistente
 router.put('/atleti/:ID_atleta', async (req, res) => {
-    let connection;
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+    res.setHeader('Content-Type', 'application/json');
     try {
-        connection = await db.getConnection();
         const atletaDaModificare = { ...req.body, ID_atleta: req.params.ID_atleta };
-        const success = await atletaDAO.updateAtleta(connection, atletaDaModificare);
+        const success = await atletaDAO.updateAtleta(conn, atletaDaModificare);
+        await conn.commit();
         if (success) {
             res.status(200).json({ message: 'Atleta modificato con successo' });
         } else {
-            res.status(404).json({ error: 'Atleta non trovato' });
+            res.status(404).json({ erroreMsg: 'Atleta non trovato' });
         }
     } catch (error) {
-        console.error('Errore nella modifica dell\'atleta:', error);
-        res.status(500).json({ error: 'Errore nella modifica dell\'atleta' });
+        console.error(`routes/atleta.js:`, error.message, error.stack);
+        await conn.rollback();
+        res.status(400);
+        res.json({ erroreMsg: error.message });
     } finally {
-        await connection.close();
+        await conn.close();
     }
 });
 
 // DELETE /atleti/:ID_atleta - Cancella un atleta (soft delete)
 router.delete('/atleti/:ID_atleta', async (req, res) => {
-    let connection;
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+    res.setHeader('Content-Type', 'application/json');
     try {
-        connection = await db.getConnection();
-        const success = await atletaDAO.deleteAtleta(connection, req.params.ID_atleta);
+        const success = await atletaDAO.deleteAtleta(conn, req.params.ID_atleta);
+        await conn.commit();
         if (success) {
             res.status(200).json({ message: 'Atleta cancellato con successo' });
         } else {
-            res.status(404).json({ error: 'Atleta non trovato' });
+            res.status(404).json({ erroreMsg: 'Atleta non trovato' });
         }
     } catch (error) {
-        console.error('Errore nella cancellazione dell\'atleta:', error);
-        res.status(500).json({ error: 'Errore nella cancellazione dell\'atleta' });
+        console.error(`routes/atleta.js:`, error.message, error.stack);
+        await conn.rollback();
+        res.status(400);
+        res.json({ erroreMsg: error.message });
     } finally {
-        await connection.close();
+        await conn.close();
     }
 });
 

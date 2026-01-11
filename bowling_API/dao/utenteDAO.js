@@ -23,6 +23,7 @@ const findUserById = async function (connection, ID_utente) {
   sql = "SELECT * FROM utente WHERE ID_utente = ? ";
   params=[ID_utente];
   const rows = await db.execute(connection,sql,params);
+  
   return (!rows ? [] : rows);
 }
 

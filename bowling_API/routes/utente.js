@@ -27,7 +27,7 @@ router.get('/utenti', async function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     try {
         res.json(await utenteDAO.findUserById(conn, req.params.ID_utente));
-        conn.commit();
+        await conn.commit();
     } catch (err) {
         console.error(`routes/utente.js:`, err.message, err.stack);
         await conn.rollback();

@@ -6,7 +6,7 @@ const getAtletiByTorneo = async function(connection, ID_torneo) {
                  FROM atleta a
                  INNER JOIN partecipa p ON a.ID_atleta = p.ID_atleta_partecipa
                  WHERE p.ID_torneo_partecipa = ? AND a.Deleted = 'N'
-                 ORDER BY a.Cognome, a.Nome`;
+                 ORDER BY a.Nome, a.Cognome`;
     
     const params = [ID_torneo];
     

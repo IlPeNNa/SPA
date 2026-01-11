@@ -54,7 +54,7 @@ const createAtleta = async function (connection, atleta) {
                 Braccio_dominante, Sesso, ID_utente, Deleted)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    const params = [atleta.ID_atleta, atleta.Nome, atleta.Cognome, 
+    params = [atleta.ID_atleta, atleta.Nome, atleta.Cognome, 
         atleta.Data_nascita, atleta.Stile_gioco, atleta.Braccio_dominante, 
         atleta.Sesso,atleta.ID_utente, "N"];
 
@@ -102,8 +102,8 @@ const getAtletaById = async function (connection, ID_atleta) {
 
   const sql = "SELECT * FROM atleta WHERE ID_atleta = ? AND Deleted = 'N'";
   const params = [ID_atleta];
-  const rows = await db.execute(connection, sql, params);
 
+  const rows = await db.execute(connection, sql, params);
   return (!rows ? [] : rows);
 }
 
