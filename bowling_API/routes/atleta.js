@@ -25,7 +25,7 @@ router.get('/atleti', async function(req, res) {
 });
 
 // GET /atleti/:ID_atleta - Recupera un atleta specifico con statistiche
-router.get('/atleti/:ID_atleta', async (req, res) => {
+router.get('/atleti/:ID_atleta', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -65,7 +65,7 @@ router.get('/atleti/:ID_atleta', async (req, res) => {
 });
 
 // POST /atleti - Crea un nuovo atleta
-router.post('/atleti', async (req, res) => {
+router.post('/atleti', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -92,7 +92,7 @@ router.post('/atleti', async (req, res) => {
 });
 
 // PUT /atleti/:ID_atleta - Modifica un atleta esistente
-router.put('/atleti/:ID_atleta', async (req, res) => {
+router.put('/atleti/:ID_atleta', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -116,7 +116,7 @@ router.put('/atleti/:ID_atleta', async (req, res) => {
 });
 
 // DELETE /atleti/:ID_atleta - Cancella un atleta (soft delete)
-router.delete('/atleti/:ID_atleta', async (req, res) => {
+router.delete('/atleti/:ID_atleta', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');

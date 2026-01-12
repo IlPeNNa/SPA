@@ -26,7 +26,7 @@ router.get('/tornei', async function(req, res) {
 });
 
 // GET /tornei/:ID_torneo/dettagli - Recupera dettagli completi torneo con atleti e punteggi
-router.get('/tornei/:ID_torneo/dettagli', async (req, res) => {
+router.get('/tornei/:ID_torneo/dettagli', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -104,7 +104,7 @@ router.get('/tornei/:ID_torneo/dettagli', async (req, res) => {
 });
 
 // POST /tornei - Crea un nuovo torneo
-router.post('/tornei', async (req, res) => {
+router.post('/tornei', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -131,7 +131,7 @@ router.post('/tornei', async (req, res) => {
 });
 
 // PUT /tornei/:ID_torneo - Modifica un torneo esistente
-router.put('/tornei/:ID_torneo', async (req, res) => {
+router.put('/tornei/:ID_torneo', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -155,7 +155,7 @@ router.put('/tornei/:ID_torneo', async (req, res) => {
 });
 
 // DELETE /tornei/:ID_torneo - Cancella un torneo (soft delete)
-router.delete('/tornei/:ID_torneo', async (req, res) => {
+router.delete('/tornei/:ID_torneo', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');

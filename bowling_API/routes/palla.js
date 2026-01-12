@@ -5,18 +5,13 @@ const counterDAO = require('../dao/counterDAO');
 
 const router = express.Router();
 
-// GET /palle?ID_atleta=? - Recupera le palle di un atleta
-router.get('/palle', async function(req, res) {
+// GET /palle/:ID_atleta - Recupera le palle di un atleta
+router.get('/palle/:ID_atleta', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        const ID_atleta = req.query.ID_atleta;
-        if (!ID_atleta) {
-            await conn.rollback();
-            res.status(400);
-            return res.json({ erroreMsg: 'ID_atleta è richiesto' });
-        }
+        const ID_atleta = req.params.ID_atleta;
         res.json(await pallaDAO.getPalleByAtleta(conn, ID_atleta));
         await conn.commit();
     } catch (error) {
@@ -30,7 +25,7 @@ router.get('/palle', async function(req, res) {
 });
 
 // POST /palle - Inserisce una nuova palla
-router.post('/palle', async (req, res) => {
+router.post('/palle', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -57,7 +52,7 @@ router.post('/palle', async (req, res) => {
 });
 
 // PUT /palle/:ID_palla - Modifica una palla esistente
-router.put('/palle/:ID_palla', async (req, res) => {
+router.put('/palle/:ID_palla', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
@@ -81,7 +76,7 @@ router.put('/palle/:ID_palla', async (req, res) => {
 });
 
 // DELETE /palle/:ID_palla - Cancella una palla (soft delete)
-router.delete('/palle/:ID_palla', async (req, res) => {
+router.delete('/palle/:ID_palla', async function(req, res) {
     conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
