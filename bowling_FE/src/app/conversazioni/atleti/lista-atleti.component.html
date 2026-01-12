@@ -1,0 +1,45 @@
+<section class="lista-atleti">
+  <h2>Lista Atleti</h2>
+
+  <div class="azioni">
+    <button routerLink="/atleti/nuovo" class="btn-nuovo">+ Nuovo Atleta</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Caricamento in corso...</div>
+
+  <div *ngIf="errore" class="errore">{{ errore }}</div>
+
+  <table *ngIf="!loading && !errore && atleti.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Data di Nascita</th>
+        <th>Stile di Gioco</th>
+        <th>Braccio Dominante</th>
+        <th>Sesso</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let atleta of atleti">
+        <td>{{ atleta.ID_atleta }}</td>
+        <td>{{ atleta.Nome }}</td>
+        <td>{{ atleta.Cognome }}</td>
+        <td>{{ atleta.Data_nascita | date:'dd/MM/yyyy' }}</td>
+        <td>{{ atleta.Stile_gioco }}</td>
+        <td>{{ atleta.Braccio_dominante }}</td>
+        <td>{{ atleta.Sesso }}</td>
+        <td class="azioni-td">
+          <button [routerLink]="['/atleti/modifica', atleta.ID_atleta]" class="btn-modifica">Modifica</button>
+          <button (click)="eliminaAtleta(atleta.ID_atleta)" class="btn-elimina">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !errore && atleti.length === 0" class="nessun-dato">
+    Nessun atleta trovato. <a routerLink="/atleti/nuovo">Crea il primo atleta</a>
+  </div>
+</section>
