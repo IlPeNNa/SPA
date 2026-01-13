@@ -13,28 +13,12 @@ import { Atleta } from '../../modelli/atleta.model';
 })
 export class ListaAtletiComponent implements OnInit {
   atleti: Atleta[] = [];
-  loading: boolean = true;
-  errore: string = '';
 
   constructor(private atletaService: AtletaService) {}
 
-  ngOnInit(): void {
-    this.caricaAtleti();
-  }
-
-  caricaAtleti(): void {
-    this.loading = true;
-    this.errore = '';
-    this.atletaService.getAll().subscribe({
-      next: (data) => {
-        this.atleti = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Errore nel caricamento degli atleti:', err);
-        this.errore = 'Impossibile caricare gli atleti';
-        this.loading = false;
-      }
+  ngOnInit() {
+    this.atletaService.getAllAtleti().subscribe(atleti => {
+      this.atleti = atleti;
     });
   }
 }

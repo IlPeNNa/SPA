@@ -10,12 +10,12 @@ export class AtletaService {
   constructor(private http: HttpClient) {}
 
   // GET /atleti - Lista tutti gli atleti
-  getAll(): Observable<Atleta[]> {
+  getAllAtleti(): Observable<Atleta[]> {
     return this.http.get<Atleta[]>(this.baseUrl);
   }
 
   // GET /atleti/:ID_atleta - Ottieni atleta con statistiche
-  getById(id: number): Observable<Atleta> {
+  getAtletaById(id: number): Observable<Atleta> {
     return this.http.get<Atleta>(`${this.baseUrl}/${id}`);
   }
 
