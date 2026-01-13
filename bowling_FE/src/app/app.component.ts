@@ -27,6 +27,10 @@ export class AppComponent {
     this.loggedUser=this.session.getLoggedUser();
   }
 
+  get isAtleta(): boolean {
+    return this.session.isAtleta();
+  }
+  
   resetErrore(): void {
     this.errore = '';
   }

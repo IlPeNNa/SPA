@@ -18,4 +18,19 @@ export class SessionService {
     localStorage.removeItem('utente');
   }
 
+  isAtleta(): boolean {
+    const user = this.getLoggedUser();
+    return user?.Permessi === 'atleta';
+  }
+
+  isAdmin(): boolean {
+    const user = this.getLoggedUser();
+    return user?.Permessi === 'admin';
+  }
+
+  isGuest(): boolean {
+    const user = this.getLoggedUser();
+    return user?.Permessi === 'guest';
+  }
+
 }

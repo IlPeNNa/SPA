@@ -10,3 +10,8 @@ export interface Palla {
     PSA: number;
     Deleted: 'Y' | 'N';
 }
+
+/*getImageUrl(nomePalla: string): string {
+  const fileName = nomePalla.replace(/ /g, '_');
+  return `images/${fileName}.jpg`;
+}*/

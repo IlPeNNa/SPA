@@ -19,6 +19,7 @@ export class AtletaService {
     return this.http.get<Atleta>(`${this.baseUrl}/${id}`);
   }
 
+  /*
   // POST /atleti - Crea nuovo atleta
   create(atleta: Atleta): Observable<Atleta> {
     return this.http.post<Atleta>(this.baseUrl, atleta);
@@ -33,4 +34,5 @@ export class AtletaService {
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+  */
 }

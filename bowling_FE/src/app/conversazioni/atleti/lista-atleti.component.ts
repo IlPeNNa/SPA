@@ -37,18 +37,4 @@ export class ListaAtletiComponent implements OnInit {
       }
     });
   }
-
-  eliminaAtleta(id: number): void {
-    if (confirm('Sei sicuro di voler eliminare questo atleta?')) {
-      this.atletaService.delete(id).subscribe({
-        next: () => {
-          this.caricaAtleti(); // Ricarica la lista
-        },
-        error: (err) => {
-          console.error('Errore nell\'eliminazione:', err);
-          alert('Errore nell\'eliminazione dell\'atleta');
-        }
-      });
-    }
-  }
 }

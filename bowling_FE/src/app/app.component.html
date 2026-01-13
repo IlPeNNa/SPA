@@ -6,8 +6,8 @@
     <a routerLink="/home">Home</a>
     <a *ngIf="loggedUser" routerLink="/atleti">Atleti</a>
     <a *ngIf="loggedUser" routerLink="/tornei">Tornei</a>
-    <a *ngIf="loggedUser && (loggedUser.Permessi === 'atleta')" routerLink="/profilo">Profilo</a>
-    <a *ngIf="loggedUser && (loggedUser.Permessi === 'atleta')" routerLink="/arsenale">Arsenale</a>
+    <a *ngIf="loggedUser && isAtleta" routerLink="/profilo">Profilo</a>
+    <a *ngIf="loggedUser && isAtleta" routerLink="/arsenale">Arsenale</a>
     <a *ngIf="loggedUser" href="#" (click)="logout()">Logout</a>
   </nav>
 
