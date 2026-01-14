@@ -13,11 +13,6 @@ const nextId = async function (connection, tableName) {
 
     nextId = rows[0].lastId;
     
-    // Per utente, verifica che non superi 1000 (riservati per admin da 1001 in poi)
-    if (tableName === 'utente' && nextId >= 1001) {
-        throw new Error('Impossibile generare nuovo ID utente: raggiunto limite massimo (1000)');
-    }
-    
     return nextId;
 }
 

@@ -15,7 +15,6 @@ const insertPalla = async function(connection, palla) {
     
     if (result.affectedRows == 0) return null;
     else return palla;
-
 }
 
 const updatePalla = async function(connection, palla) {
