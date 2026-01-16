@@ -24,14 +24,13 @@ export class AtletaService {
     return this.http.get<Atleta>(`${this.baseUrl}?ID_utente=${idUtente}`);
   }
 
-  /*
   // POST /atleti - Crea nuovo atleta
-  create(atleta: Atleta): Observable<Atleta> {
+  create(atleta: Partial<Atleta>): Observable<Atleta> {
     return this.http.post<Atleta>(this.baseUrl, atleta);
   }
 
   // PUT /atleti/:ID_atleta - Modifica atleta
-  update(id: number, atleta: Atleta): Observable<any> {
+  update(id: number, atleta: Partial<Atleta>): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, atleta);
   }
 
@@ -39,5 +38,4 @@ export class AtletaService {
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
-  */
 }

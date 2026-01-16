@@ -19,11 +19,11 @@
         <th>Stile di Gioco</th>
         <th>Braccio Dominante</th>
         <th>Sesso</th>
-        <th>Azioni</th>
+        <th *ngIf="isAdmin">Azioni</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let atleta of atleti">
+      <tr *ngFor="let atleta of atleti" (click)="visualizzaInfo(atleta.ID_atleta)" class="atleta-row">
         <td>{{ atleta.ID_atleta }}</td>
         <td>{{ atleta.Nome }}</td>
         <td>{{ atleta.Cognome }}</td>
@@ -31,7 +31,7 @@
         <td>{{ atleta.Stile_gioco }}</td>
         <td>{{ atleta.Braccio_dominante }}</td>
         <td>{{ atleta.Sesso }}</td>
-        <td class="azioni-td">
+        <td class="azioni-td" *ngIf="isAdmin" (click)="$event.stopPropagation()">
           <button [routerLink]="['/atleti/modifica', atleta.ID_atleta]" class="btn-modifica">Modifica</button>
           <button (click)="eliminaAtleta(atleta.ID_atleta)" class="btn-elimina">Elimina</button>
         </td>

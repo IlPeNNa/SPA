@@ -1,0 +1,84 @@
+<div class="info-container">
+  <div *ngIf="loading" class="loading">
+    Caricamento informazioni atleta...
+  </div>
+
+  <div *ngIf="!loading && !atleta" class="nessun-atleta">
+    Atleta non trovato.
+  </div>
+
+  <div *ngIf="!loading && atleta" class="atleta-dettaglio">
+    <div class="header-section">
+      <h2>{{ atleta.Nome }} {{ atleta.Cognome }}</h2>
+      <button *ngIf="isAdmin" class="btn-modifica" (click)="modificaAtleta()">
+        Modifica Atleta
+      </button>
+    </div>
+
+    <div class="content-section">
+      <div class="foto-section">
+        <img 
+          *ngIf="fotoUrl" 
+          [src]="fotoUrl" 
+          [alt]="atleta.Nome + ' ' + atleta.Cognome"
+          (error)="onFotoError()"
+          class="foto-atleta"
+        />
+        <div *ngIf="!fotoUrl" class="no-foto">
+          <span class="icona-placeholder">📷</span>
+          <p>Nessuna foto disponibile</p>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Informazioni Personali</h3>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Data di Nascita:</label>
+            <span>{{ atleta.Data_nascita | date:'dd/MM/yyyy' }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Sesso:</label>
+            <span>{{ atleta.Sesso === 'M' ? 'Maschio' : 'Femmina' }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Braccio Dominante:</label>
+            <span>{{ atleta.Braccio_dominante === 'Dx' ? 'Destro' : 'Sinistro' }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Stile di Gioco:</label>
+            <span>{{ atleta.Stile_gioco }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="atleta.Numero_partite !== undefined" class="statistiche-section">
+          <h3>Statistiche</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Partite Giocate:</label>
+              <span>{{ atleta.Numero_partite }}</span>
+            </div>
+
+            <div class="info-item">
+              <label>Totale Punti:</label>
+              <span>{{ atleta.Totale_punti }}</span>
+            </div>
+
+            <div class="info-item">
+              <label>Media:</label>
+              <span class="media-badge">{{ atleta.Media }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-indietro" (click)="tornaAllaLista()">
+      ← Torna alla lista atleti
+    </button>
+  </div>
+</div>

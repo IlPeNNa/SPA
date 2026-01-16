@@ -1,0 +1,52 @@
+<section class="atleta-form" *ngIf="isAdmin">
+  <h2>{{ modifica ? 'Modifica Atleta' : 'Nuovo Atleta' }}</h2>
+
+  <form #form="ngForm" (ngSubmit)="salva()">
+    <label>Nome:
+      <input name="nome" [(ngModel)]="atleta.Nome" required />
+    </label>
+
+    <label>Cognome:
+      <input name="cognome" [(ngModel)]="atleta.Cognome" required />
+    </label>
+
+    <label>Data di Nascita:
+      <input name="data_nascita" [(ngModel)]="atleta.Data_nascita" type="date" required />
+    </label>
+
+    <label>Sesso:
+      <select name="sesso" [(ngModel)]="atleta.Sesso" required>
+        <option value="">Seleziona</option>
+        <option value="M">Maschio</option>
+        <option value="F">Femmina</option>
+      </select>
+    </label>
+
+    <label>Braccio Dominante:
+      <select name="braccio_dominante" [(ngModel)]="atleta.Braccio_dominante" required>
+        <option value="">Seleziona</option>
+        <option value="Dx">Destro</option>
+        <option value="Sx">Sinistro</option>
+      </select>
+    </label>
+
+    <label>Stile di Gioco:
+      <input name="stile_gioco" [(ngModel)]="atleta.Stile_gioco" required />
+    </label>
+
+    <label *ngIf="!modifica">ID Utente:
+      <input name="id_utente" [(ngModel)]="atleta.ID_utente" type="number" required />
+    </label>
+
+    <button type="submit" [disabled]="form.invalid">
+      {{ modifica ? 'Salva Modifiche' : 'Crea Atleta' }}
+    </button>
+    <button type="button" (click)="annulla()" class="cancel-link">Annulla</button>
+  </form>
+</section>
+
+<div *ngIf="!isAdmin" class="accesso-negato">
+  <h2>Accesso Negato</h2>
+  <p>Solo gli amministratori possono gestire gli atleti.</p>
+  <button (click)="annulla()">Torna alla lista</button>
+</div>
