@@ -1,0 +1,40 @@
+<section class="torneo-form">
+  <h2>{{ modifica ? 'Modifica Torneo' : 'Nuovo Torneo' }}</h2>
+
+  <form #form="ngForm" (ngSubmit)="salva()">
+    <label>Nome Torneo:
+      <input name="nome_torneo" [(ngModel)]="torneo.Nome_torneo" required />
+    </label>
+
+    <label>Categoria:
+      <select name="categoria" [(ngModel)]="torneo.Categoria" required>
+        <option value="">Seleziona categoria</option>
+        <option value="Esordiente">Esordiente</option>
+        <option value="Cadetto">Cadetto</option>
+        <option value="Eccellenza">Eccellenza</option>
+        <option value="Professionista">Professionista</option>
+      </select>
+    </label>
+
+    <label>Data Inizio:
+      <input name="data_inizio" [(ngModel)]="torneo.Data_inizio" type="date" required />
+    </label>
+
+    <label>Data Fine:
+      <input name="data_fine" [(ngModel)]="torneo.Data_fine" type="date" required />
+    </label>
+
+    <label>Numero Partite:
+      <input name="numero_partite" [(ngModel)]="torneo.Numero_partite" type="number" min="1" required />
+    </label>
+
+    <label>Montepremi (€):
+      <input name="montepremi" [(ngModel)]="torneo.Montepremi" type="number" min="0" step="0.01" required />
+    </label>
+
+    <button type="submit" [disabled]="form.invalid">
+      {{ modifica ? 'Salva Modifiche' : 'Crea Torneo' }}
+    </button>
+    <button type="button" (click)="annulla()" class="cancel-link">Annulla</button>
+  </form>
+</section>

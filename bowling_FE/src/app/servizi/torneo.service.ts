@@ -14,6 +14,11 @@ export class TorneoService {
     return this.http.get<Torneo[]>(this.baseUrl);
   }
 
+  // GET /tornei/:ID_torneo - Recupera un singolo torneo
+  getById(id: number): Observable<Torneo> {
+    return this.http.get<Torneo>(`${this.baseUrl}/${id}`);
+  }
+
   // GET /tornei/:ID_torneo/dettagli - Dettagli torneo con punteggi
   getDettagli(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}/dettagli`);
