@@ -1,0 +1,48 @@
+<div class="risultati-container">
+  <h2>Risultati Torneo</h2>
+
+  <div *ngIf="loading" class="loading">
+    Caricamento risultati...
+  </div>
+
+  <div *ngIf="!loading && risultati.length === 0" class="nessun-risultato">
+    Nessun risultato disponibile per questo torneo.
+  </div>
+
+  <div *ngIf="!loading && risultati.length > 0" class="tabella-wrapper">
+    <table class="tabella-risultati">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>NOME</th>
+          <th>COGNOME</th>
+          <th *ngFor="let num of getNumeriPartite()">GAME {{ num }}</th>
+          <th>TOTALE</th>
+          <th>MEDIA</th>
+          <th>+/-</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let atleta of risultati; let i = index">
+          <td class="posizione">{{ i + 1 }}</td>
+          <td>{{ atleta.Nome }}</td>
+          <td>{{ atleta.Cognome }}</td>
+          <td *ngFor="let num of getNumeriPartite()" class="punteggio">
+            {{ getPunteggioPartita(atleta, num) }}
+          </td>
+          <td class="totale">{{ atleta.Totale }}</td>
+          <td class="media">{{ atleta.Media }}</td>
+          <td class="plus-minus" [ngClass]="{
+            'positivo': atleta.PlusMinus > 0,
+            'negativo': atleta.PlusMinus < 0,
+            'neutro': atleta.PlusMinus === 0
+          }">
+            {{ atleta.PlusMinus > 0 ? '+' : '' }}{{ atleta.PlusMinus }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn-indietro" (click)="tornaIndietro()">Torna alla lista tornei</button>
+</div>

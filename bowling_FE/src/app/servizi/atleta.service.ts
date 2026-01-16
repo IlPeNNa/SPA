@@ -19,6 +19,11 @@ export class AtletaService {
     return this.http.get<Atleta>(`${this.baseUrl}/${id}`);
   }
 
+  // GET /atleti?ID_utente=X - Recupera atleta tramite ID_utente
+  getByUserId(idUtente: number): Observable<Atleta> {
+    return this.http.get<Atleta>(`${this.baseUrl}?ID_utente=${idUtente}`);
+  }
+
   /*
   // POST /atleti - Crea nuovo atleta
   create(atleta: Atleta): Observable<Atleta> {

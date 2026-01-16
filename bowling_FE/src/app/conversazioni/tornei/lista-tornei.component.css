@@ -1,0 +1,101 @@
+.tornei-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.loading,
+.nessun-torneo {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.lista-tornei {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.torneo-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.torneo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.torneo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.torneo-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
+}
+
+.categoria-badge {
+  background-color: #3498db;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.torneo-info {
+  margin-bottom: 15px;
+}
+
+.torneo-info p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.torneo-info strong {
+  color: #2c3e50;
+}
+
+.torneo-footer {
+  text-align: right;
+}
+
+.link-risultati {
+  color: #3498db;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.torneo-card:hover .link-risultati {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .lista-tornei {
+    grid-template-columns: 1fr;
+  }
+
+  .tornei-container {
+    padding: 10px;
+  }
+}

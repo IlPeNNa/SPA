@@ -1,0 +1,28 @@
+<div class="tornei-container">
+  <h2>Lista Tornei</h2>
+
+  <div *ngIf="loading" class="loading">
+    Caricamento tornei...
+  </div>
+
+  <div *ngIf="!loading && tornei.length === 0" class="nessun-torneo">
+    Nessun torneo disponibile.
+  </div>
+
+  <div *ngIf="!loading && tornei.length > 0" class="lista-tornei">
+    <div *ngFor="let torneo of tornei" class="torneo-card" (click)="visualizzaRisultati(torneo.ID_torneo)">
+      <div class="torneo-header">
+        <h3>{{ torneo.Nome_torneo }}</h3>
+        <span class="categoria-badge">{{ torneo.Categoria }}</span>
+      </div>
+      <div class="torneo-info">
+        <p><strong>Data:</strong> {{ torneo.Data_inizio | date:'dd/MM/yyyy' }} - {{ torneo.Data_fine | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Località:</strong> {{ torneo.Localita }}</p>
+        <p><strong>Partite:</strong> {{ torneo.Numero_partite }}</p>
+      </div>
+      <div class="torneo-footer">
+        <span class="link-risultati">Visualizza risultati →</span>
+      </div>
+    </div>
+  </div>
+</div>
