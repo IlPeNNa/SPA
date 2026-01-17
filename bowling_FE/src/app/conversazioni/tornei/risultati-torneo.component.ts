@@ -24,6 +24,8 @@ export class RisultatiTorneoComponent implements OnInit {
   numeroPartite: number = 0;
   idTorneo: number = 0;
   loading: boolean = true;
+  colonnaOrdinamento: string = '';
+  ordineAscendente: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,5 +77,36 @@ export class RisultatiTorneoComponent implements OnInit {
   // Torna alla lista dei tornei
   tornaIndietro(): void {
     this.router.navigate(['/tornei']);
+  }
+
+  ordinaPer(colonna: string): void {
+    // Se clicco la stessa colonna, inverto l'ordine. Altrimenti, ricomincio da ascendente
+    if (this.colonnaOrdinamento === colonna) {
+      this.ordineAscendente = !this.ordineAscendente;
+    } else {
+      this.ordineAscendente = true; // Primo click sempre A-Z
+    }
+
+    this.colonnaOrdinamento = colonna;
+
+    this.risultati.sort((a, b) => {
+      let valA = a[colonna as keyof RisultatoAtleta];
+      let valB = b[colonna as keyof RisultatoAtleta];
+
+      // Gestisci valori nulli/undefined
+      if (valA == null || valB == null) {
+        return (valA == null ? 1 : 0) - (valB == null ? 1 : 0);
+      }
+
+      // Converti a maiuscolo se è stringa
+      if (typeof valA === 'string') {
+        valA = valA.toUpperCase() as any;
+        valB = (valB as string).toUpperCase() as any;
+      }
+
+      // Confronta i valori
+      const risultato = valA > valB ? 1 : valA < valB ? -1 : 0;
+      return this.ordineAscendente ? risultato : -risultato;
+    });
   }
 }

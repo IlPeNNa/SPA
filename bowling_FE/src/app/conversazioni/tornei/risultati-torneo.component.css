@@ -45,6 +45,12 @@ h2 {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.tabella-risultati th:hover {
+  background-color: #1a252f;
 }
 
 .tabella-risultati th:last-child {
@@ -81,6 +87,17 @@ h2 {
   font-weight: 500;
 }
 
+.punteggio.perfect {
+  background: radial-gradient(ellipse 70px 35px at 50% 50%, transparent 35%, #ffff00 35%, #ffc107 40%, transparent 45%);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.punteggio.high-score {
+  font-weight: bold;
+  color: #e74c3c;
+}
+
 .totale {
   font-weight: bold;
   background-color: #e8f4f8;
@@ -100,14 +117,17 @@ h2 {
 
 .plus-minus.positivo {
   color: #27ae60;
+  background-color: #d5f4e6;
 }
 
 .plus-minus.negativo {
   color: #e74c3c;
+  background-color: #fadbd8;
 }
 
 .plus-minus.neutro {
   color: #95a5a6;
+  background-color: #ecf0f1;
 }
 
 .btn-indietro {

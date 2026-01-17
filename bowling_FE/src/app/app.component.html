@@ -3,11 +3,11 @@
   <h1>ASD BOWLING FERRARA</h1>
 
   <nav class="clearfix">
-    <a routerLink="/home">Home</a>
-    <a *ngIf="loggedUser" routerLink="/atleti">Atleti</a>
-    <a *ngIf="loggedUser" routerLink="/tornei">Tornei</a>
-    <a *ngIf="loggedUser && isAtleta" routerLink="/profilo">Profilo</a>
-    <a *ngIf="loggedUser && isAtleta" routerLink="/arsenale">Arsenale</a>
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a *ngIf="loggedUser" routerLink="/atleti" routerLinkActive="active">Atleti</a>
+    <a *ngIf="loggedUser" routerLink="/tornei" routerLinkActive="active">Tornei</a>
+    <a *ngIf="loggedUser && isAtleta" routerLink="/profilo" routerLinkActive="active">Profilo</a>
+    <a *ngIf="loggedUser && isAtleta" routerLink="/arsenale" routerLinkActive="active">Arsenale</a>
     <a *ngIf="loggedUser" href="#" (click)="logout()">Logout</a>
   </nav>
 

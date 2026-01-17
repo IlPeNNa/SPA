@@ -14,12 +14,12 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>NOME</th>
-          <th>COGNOME</th>
+          <th (click)="ordinaPer('Nome')">NOME</th>
+          <th (click)="ordinaPer('Cognome')">COGNOME</th>
           <th *ngFor="let num of getNumeriPartite()">GAME {{ num }}</th>
-          <th>TOTALE</th>
-          <th>MEDIA</th>
-          <th>+/-</th>
+          <th (click)="ordinaPer('Totale')">TOTALE</th>
+          <th (click)="ordinaPer('Media')">MEDIA</th>
+          <th (click)="ordinaPer('PlusMinus')">+/-</th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +27,10 @@
           <td class="posizione">{{ i + 1 }}</td>
           <td>{{ atleta.Nome }}</td>
           <td>{{ atleta.Cognome }}</td>
-          <td *ngFor="let num of getNumeriPartite()" class="punteggio">
+          <td *ngFor="let num of getNumeriPartite()" class="punteggio" [ngClass]="{
+            'perfect': getPunteggioPartita(atleta, num) === 300,
+            'high-score': getPunteggioPartita(atleta, num) >= 250 && getPunteggioPartita(atleta, num) < 300
+          }">
             {{ getPunteggioPartita(atleta, num) }}
           </td>
           <td class="totale">{{ atleta.Totale }}</td>

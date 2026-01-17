@@ -12,19 +12,17 @@
   <table *ngIf="!loading && !errore && atleti.length > 0">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Cognome</th>
-        <th>Data di Nascita</th>
-        <th>Stile di Gioco</th>
-        <th>Braccio Dominante</th>
-        <th>Sesso</th>
+        <th (click)="ordinaPer('Nome')">Nome</th>
+        <th (click)="ordinaPer('Cognome')">Cognome</th>
+        <th (click)="ordinaPer('Data_nascita')">Data di Nascita</th>
+        <th (click)="ordinaPer('Stile_gioco')">Stile di Gioco</th>
+        <th (click)="ordinaPer('Braccio_dominante')">Braccio Dominante</th>
+        <th (click)="ordinaPer('Sesso')">Sesso</th>
         <th *ngIf="isAdmin">Azioni</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let atleta of atleti" (click)="visualizzaInfo(atleta.ID_atleta)" class="atleta-row">
-        <td>{{ atleta.ID_atleta }}</td>
         <td>{{ atleta.Nome }}</td>
         <td>{{ atleta.Cognome }}</td>
         <td>{{ atleta.Data_nascita | date:'dd/MM/yyyy' }}</td>

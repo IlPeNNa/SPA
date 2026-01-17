@@ -41,9 +41,10 @@ header nav a {
   margin-right: 7px;
 }
 
-header nav a:hover {
-  color: #f9dcb4;
-  background: linear-gradient(#621900, #822100);
+header nav a:hover,
+header nav a.active {
+  color: #f9dcb4 !important;
+  background: linear-gradient(#621900, #822100) !important;
 }
 
 /* Login */

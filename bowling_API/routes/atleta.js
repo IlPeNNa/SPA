@@ -39,17 +39,19 @@ router.get('/atleti/:ID_atleta', async function(req, res) {
         // Recupera le statistiche dell'atleta
         const statistiche = await partitaDAO.getStatisticheAtleta(conn, req.params.ID_atleta);
         
-        // Combina i dati dell'atleta con le statistiche (esclusi gli ID)
+        // Combina i dati dell'atleta con le statistiche
         const atletaCompleto = {
+            ID_atleta: atleta[0].ID_atleta,
             Nome: atleta[0].Nome,
             Cognome: atleta[0].Cognome,
             Data_nascita: atleta[0].Data_nascita,
             Stile_gioco: atleta[0].Stile_gioco,
             Braccio_dominante: atleta[0].Braccio_dominante,
             Sesso: atleta[0].Sesso,
+            ID_utente: atleta[0].ID_utente,
             Numero_partite: statistiche.Numero_partite || 0,
             Totale_punti: statistiche.Totale_punti || 0,
-            Media: statistiche.Media ? parseFloat(statistiche.Media.toFixed(2)) : 0
+            Media: statistiche.Media != null ? parseFloat(Number(statistiche.Media).toFixed(2)) : 0
         };
         
         res.json(atletaCompleto);

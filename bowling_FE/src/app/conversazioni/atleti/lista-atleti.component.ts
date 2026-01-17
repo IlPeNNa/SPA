@@ -17,16 +17,51 @@ export class ListaAtletiComponent implements OnInit {
   loading: boolean = true;
   errore: string = '';
   isAdmin: boolean = false;
+  colonnaOrdinamento: string = '';
+  ordineAscendente: boolean = true;
 
   constructor(
-    private atletaService: AtletaService,
-    private sessionService: SessionService,
-    private router: Router
-  ) {}
+    private atletaService: AtletaService, private sessionService: SessionService, private router: Router) {}
 
   ngOnInit() {
     this.isAdmin = this.sessionService.isAdmin();
     this.caricaAtleti();
+  }
+
+  ordinaPer(colonna: string) {
+    // Se clicco la stessa colonna, inverto l'ordine. Altrimenti, ricomincio da ascendente
+    if (this.colonnaOrdinamento === colonna) {
+      this.ordineAscendente = !this.ordineAscendente;
+    } else {
+      this.ordineAscendente = true; // Primo click sempre A-Z
+    }
+
+    this.colonnaOrdinamento = colonna;
+
+    this.atleti.sort((a, b) => {
+      let valA = a[colonna as keyof Atleta];
+      let valB = b[colonna as keyof Atleta];
+
+      // Gestisci valori nulli/undefined
+      if (valA == null || valB == null) {
+        return (valA == null ? 1 : 0) - (valB == null ? 1 : 0);
+      }
+
+      // Converti a numero se è una stringa che rappresenta una data
+      if (colonna === 'Data_nascita') {
+        valA = new Date(valA).getTime() as any;
+        valB = new Date(valB).getTime() as any;
+      } 
+      // Converti a maiuscolo se è stringa
+      else if (typeof valA === 'string') {
+        valA = valA.toUpperCase() as any;
+        valB = (valB as string).toUpperCase() as any;
+      }
+
+      // Confronta i valori
+      const risultato = valA > valB ? 1 : valA < valB ? -1 : 0;
+      return this.ordineAscendente ? risultato : -risultato;
+    });
   }
 
   caricaAtleti() {
