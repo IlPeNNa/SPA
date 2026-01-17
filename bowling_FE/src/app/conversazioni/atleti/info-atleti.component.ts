@@ -44,8 +44,11 @@ export class InfoAtletiComponent implements OnInit {
     this.atletaService.getAtletaById(id).subscribe({
       next: (data) => {
         this.atleta = data;
-        // Costruisci URL foto (se esiste)
-        this.fotoUrl = `/images/atleti/${id}.jpg`; // Percorso esempio
+        // Costruisci URL foto usando Nome_Cognome
+        if (this.atleta.Nome && this.atleta.Cognome) {
+          const nomeFile = `${this.atleta.Nome}_${this.atleta.Cognome}`;
+          this.fotoUrl = `/images/players/${nomeFile}.jpg`;
+        }
         this.loading = false;
       },
       error: (err) => {
