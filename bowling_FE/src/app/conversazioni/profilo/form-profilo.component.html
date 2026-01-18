@@ -1,0 +1,76 @@
+<section class="profilo-form">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Caricamento dati...</p>
+  </div>
+
+  <div *ngIf="!loading">
+    <h2>✏️ Modifica il tuo Profilo</h2>
+
+    <form #form="ngForm" (ngSubmit)="salva()">
+      <div class="form-row">
+        <label>Nome:
+          <input 
+            name="nome" 
+            [(ngModel)]="atleta.Nome" 
+            required 
+            minlength="2"
+            placeholder="Inserisci il tuo nome"
+          />
+        </label>
+
+        <label>Cognome:
+          <input 
+            name="cognome" 
+            [(ngModel)]="atleta.Cognome" 
+            required 
+            minlength="2"
+            placeholder="Inserisci il tuo cognome"
+          />
+        </label>
+      </div>
+
+      <label>Data di Nascita:
+        <input 
+          name="data_nascita" 
+          [(ngModel)]="atleta.Data_nascita" 
+          type="date" 
+          required 
+        />
+      </label>
+
+      <label>Sesso:
+        <select name="sesso" [(ngModel)]="atleta.Sesso" required>
+          <option value="M">Maschio</option>
+          <option value="F">Femmina</option>
+        </select>
+      </label>
+
+      <label>Braccio Dominante:
+        <select name="braccio" [(ngModel)]="atleta.Braccio_dominante" required>
+          <option value="Dx">Destro</option>
+          <option value="Sx">Sinistro</option>
+        </select>
+      </label>
+
+      <label>Stile di Gioco:
+        <input 
+          name="stile" 
+          [(ngModel)]="atleta.Stile_gioco" 
+          required 
+          placeholder="Es: Stroker, Tweener, Cranker"
+        />
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="form.invalid">
+          💾 Salva Modifiche
+        </button>
+        <button type="button" (click)="annulla()" class="cancel-link">
+          ❌ Annulla
+        </button>
+      </div>
+    </form>
+
+  </div>
+</section>

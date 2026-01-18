@@ -1,0 +1,118 @@
+<section class="arsenale-form">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Caricamento dati...</p>
+  </div>
+
+  <div *ngIf="!loading">
+    <h2>{{ modifica ? '✏️ Modifica Palla' : '➕ Nuova Palla' }}</h2>
+
+    <form #form="ngForm" (ngSubmit)="salva()">
+      <div class="form-section">
+        <h3>📝 Informazioni Generali</h3>
+        
+        <label>Nome Palla:
+          <input 
+            name="nome" 
+            [(ngModel)]="palla.Nome_palla" 
+            required 
+            minlength="2"
+            placeholder="Es: Hyroad, Phaze II, IQ Tour"
+          />
+        </label>
+
+        <label>Marca:
+          <input 
+            name="marca" 
+            [(ngModel)]="palla.Marca_palla" 
+            required 
+            minlength="2"
+            placeholder="Es: Storm, Hammer, Brunswick"
+          />
+        </label>
+      </div>
+
+      <div class="form-section">
+        <h3>⚙️ Caratteristiche Tecniche</h3>
+        
+        <div class="form-row">
+          <label>Tipo Nucleo:
+            <select name="nucleo" [(ngModel)]="palla.Nucleo" required>
+              <option value="Simmetrtico">Simmetrico</option>
+              <option value="Asimmetrico">Asimmetrico</option>
+            </select>
+          </label>
+
+          <label>Peso (lbs):
+            <input 
+              name="peso" 
+              [(ngModel)]="palla.Peso" 
+              type="number" 
+              min="6" 
+              max="16" 
+              step="1"
+              required 
+            />
+          </label>
+        </div>
+      </div>
+
+      <div class="form-section specs-section">
+        <h3>📊 Specifiche RG / Diff / PSA</h3>
+        
+        <div class="specs-grid">
+          <label>RG (Radius of Gyration):
+            <input 
+              name="rg" 
+              [(ngModel)]="palla.RG" 
+              type="number" 
+              step="0.001" 
+              min="2.0" 
+              max="3.0"
+              required 
+              placeholder="Es: 2.485"
+            />
+            <span class="hint">Valori tipici: 2.46 - 2.80</span>
+          </label>
+
+          <label>Diff (Differential):
+            <input 
+              name="diff" 
+              [(ngModel)]="palla.Diff" 
+              type="number" 
+              step="0.001" 
+              min="0.0" 
+              max="0.1"
+              required 
+              placeholder="Es: 0.052"
+            />
+            <span class="hint">Valori tipici: 0.020 - 0.060</span>
+          </label>
+
+          <label>PSA (Preferred Spin Axis):
+            <input 
+              name="psa" 
+              [(ngModel)]="palla.PSA" 
+              type="number" 
+              step="0.001" 
+              min="0.0" 
+              max="0.1"
+              required 
+              placeholder="Es: 0.015"
+            />
+            <span class="hint">Valori tipici: 0.005 - 0.020</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="form.invalid">
+          {{ modifica ? '💾 Salva Modifiche' : '➕ Aggiungi Palla' }}
+        </button>
+        <button type="button" (click)="annulla()" class="cancel-link">
+          ❌ Annulla
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

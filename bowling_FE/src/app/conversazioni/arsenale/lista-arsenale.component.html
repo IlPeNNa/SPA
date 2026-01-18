@@ -1,0 +1,75 @@
+<div class="arsenale-container">
+  <div class="header-section">
+    <h1>🎳 Il Mio Arsenale</h1>
+    <button class="btn-aggiungi" (click)="aggiungiPalla()">
+      ➕ Aggiungi Nuova Palla
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Caricamento arsenale...</p>
+  </div>
+
+  <div *ngIf="!loading && palle.length === 0" class="no-palle">
+    <div class="empty-icon">🎳</div>
+    <h3>Il tuo arsenale è vuoto</h3>
+    <p>Aggiungi la tua prima palla per iniziare!</p>
+    <button class="btn-aggiungi-empty" (click)="aggiungiPalla()">
+      ➕ Aggiungi Prima Palla
+    </button>
+  </div>
+
+  <div *ngIf="!loading && palle.length > 0" class="palle-grid">
+    <div *ngFor="let palla of palle" class="palla-card">
+      <div class="palla-image-container">
+        <img 
+          [src]="getImageUrl(palla.Nome_palla)" 
+          [alt]="palla.Nome_palla"
+          (error)="onImageError($event)"
+          class="palla-image"
+        />
+      </div>
+      
+      <div class="palla-info">
+        <h3 class="palla-nome">{{ palla.Nome_palla }}</h3>
+        <p class="palla-marca">{{ palla.Marca_palla }}</p>
+        
+        <div class="palla-dettagli">
+          <div class="dettaglio-item">
+            <span class="label">Nucleo:</span>
+            <span class="value">{{ palla.Nucleo }}</span>
+          </div>
+          <div class="dettaglio-item">
+            <span class="label">Peso:</span>
+            <span class="value peso">{{ palla.Peso }} lbs</span>
+          </div>
+        </div>
+
+        <div class="palla-specs">
+          <div class="spec">
+            <span class="spec-label">RG</span>
+            <span class="spec-value">{{ palla.RG }}</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Diff</span>
+            <span class="spec-value">{{ palla.Diff }}</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">PSA</span>
+            <span class="spec-value">{{ palla.PSA }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="palla-actions">
+        <button class="btn-modifica" (click)="modificaPalla(palla.ID_palla)">
+          ✏️ Modifica
+        </button>
+        <button class="btn-elimina" (click)="eliminaPalla(palla)">
+          🗑️ Elimina
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

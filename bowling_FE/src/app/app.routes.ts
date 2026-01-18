@@ -6,10 +6,10 @@ import { FormAtletiComponent } from './conversazioni/atleti/form-atleti.componen
 import { ListaTorneiComponent } from './conversazioni/tornei/lista-tornei.component';
 import { RisultatiTorneoComponent } from './conversazioni/tornei/risultati-torneo.component';
 import { FormTorneiComponent } from './conversazioni/tornei/form-tornei.component';
-/*import { InfoProfiloComponent } from './conversazioni/profilo/info-profilo.component';
+import { InfoProfiloComponent } from './conversazioni/profilo/info-profilo.component';
 import { FormProfiloComponent } from './conversazioni/profilo/form-profilo.component';
 import { FormArsenaleComponent } from './conversazioni/arsenale/form-arsenale.component';
-import { ListaArsenaleComponent } from './conversazioni/arsenale/lista-arsenale.component';*/
+import { ListaArsenaleComponent } from './conversazioni/arsenale/lista-arsenale.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,10 +21,10 @@ export const routes: Routes = [
   { path: 'tornei', component: ListaTorneiComponent },
   { path: 'tornei/nuovo', component: FormTorneiComponent },
   { path: 'tornei/modifica/:id', component: FormTorneiComponent },
-  { path: 'tornei/:id/risultati', component: RisultatiTorneoComponent }
-  /*{ path: 'profilo', component: InfoProfiloComponent },
+  { path: 'tornei/:id/risultati', component: RisultatiTorneoComponent },
+  { path: 'profilo', component: InfoProfiloComponent },
   { path: 'profilo/modifica/:id', component: FormProfiloComponent },
   { path: 'arsenale', component: ListaArsenaleComponent },
   { path: 'arsenale/nuovo', component: FormArsenaleComponent },
-  { path: 'arsenale/modifica/:id', component: FormArsenaleComponent }*/
+  { path: 'arsenale/modifica/:id', component: FormArsenaleComponent }
 ];

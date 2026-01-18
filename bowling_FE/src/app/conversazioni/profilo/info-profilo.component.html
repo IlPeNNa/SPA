@@ -1,0 +1,122 @@
+<div class="profilo-container">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Caricamento profilo...</p>
+  </div>
+
+  <div *ngIf="!loading && !atleta" class="error-message">
+    <h3>❌ Profilo non trovato</h3>
+    <p>Non è stato possibile caricare il tuo profilo.</p>
+  </div>
+
+  <div *ngIf="!loading && atleta" class="profilo-content">
+    <!-- Header con foto e nome -->
+    <div class="profilo-header">
+      <div class="foto-container">
+        <img 
+          *ngIf="fotoUrl" 
+          [src]="fotoUrl" 
+          [alt]="atleta.Nome + ' ' + atleta.Cognome"
+          (error)="onFotoError()"
+          class="foto-profilo"
+        />
+        <div *ngIf="!fotoUrl" class="no-foto">
+          <span class="icona-placeholder">👤</span>
+        </div>
+      </div>
+      <div class="header-info">
+        <h1>{{ atleta.Nome }} {{ atleta.Cognome }}</h1>
+        <p class="sottotitolo">Il tuo profilo personale</p>
+        <button class="btn-modifica" (click)="modificaProfilo()">
+          ✏️ Modifica Profilo
+        </button>
+      </div>
+    </div>
+
+    <!-- Sezioni informazioni -->
+    <div class="info-sections">
+      <!-- Informazioni Personali -->
+      <div class="info-card">
+        <h2>📋 Informazioni Personali</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Data di Nascita</span>
+            <span class="value">{{ atleta.Data_nascita | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Età</span>
+            <span class="value">{{ calcolaEta() }} anni</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Sesso</span>
+            <span class="value">{{ atleta.Sesso === 'M' ? 'Maschio' : 'Femmina' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Caratteristiche di Gioco -->
+      <div class="info-card">
+        <h2>🎳 Caratteristiche di Gioco</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Braccio Dominante</span>
+            <span class="value dominant-arm">
+              {{ atleta.Braccio_dominante === 'Dx' ? '👉 Destro' : '👈 Sinistro' }}
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="label">Stile di Gioco</span>
+            <span class="value style-badge">{{ atleta.Stile_gioco }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistiche Bowling -->
+      <div class="info-card statistiche-card">
+        <h2>📊 Le Tue Statistiche</h2>
+        <div *ngIf="atleta.Numero_partite !== undefined && atleta.Numero_partite > 0" class="statistiche-grid">
+          <div class="stat-box partite">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <span class="stat-label">Partite Giocate</span>
+              <span class="stat-value">{{ atleta.Numero_partite }}</span>
+            </div>
+          </div>
+          <div class="stat-box totale">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-content">
+              <span class="stat-label">Totale Punti</span>
+              <span class="stat-value">{{ atleta.Totale_punti }}</span>
+            </div>
+          </div>
+          <div class="stat-box media">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-content">
+              <span class="stat-label">Media Punteggio</span>
+              <span class="stat-value highlight">{{ atleta.Media }}</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!atleta.Numero_partite || atleta.Numero_partite === 0" class="no-stats">
+          <p>📭 Non hai ancora giocato partite.</p>
+          <p class="subtitle">Inizia a giocare per vedere le tue statistiche!</p>
+        </div>
+      </div>
+
+      <!-- Informazioni Aggiuntive -->
+      <div class="info-card account-info">
+        <h2>🔐 Informazioni Account</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Stato Account</span>
+            <span class="value status-active">✅ Attivo</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Tipo Profilo</span>
+            <span class="value">Atleta Registrato</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
