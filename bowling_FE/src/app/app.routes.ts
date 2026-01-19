@@ -23,7 +23,7 @@ export const routes: Routes = [
   { path: 'tornei/modifica/:id', component: FormTorneiComponent },
   { path: 'tornei/:id/risultati', component: RisultatiTorneoComponent },
   { path: 'profilo', component: InfoProfiloComponent },
-  { path: 'profilo/modifica/:id', component: FormProfiloComponent },
+  { path: 'profilo/modifica', component: FormProfiloComponent },
   { path: 'arsenale', component: ListaArsenaleComponent },
   { path: 'arsenale/nuovo', component: FormArsenaleComponent },
   { path: 'arsenale/modifica/:id', component: FormArsenaleComponent }

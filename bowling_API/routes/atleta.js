@@ -12,7 +12,25 @@ router.get('/atleti', async function(req, res) {
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        res.json(await atletaDAO.getAllAtleti(conn, req.query));
+        const atleti = await atletaDAO.getAllAtleti(conn, req.query);
+        
+        // Se filtrato per ID_utente, aggiungi statistiche
+        if (req.query.ID_utente && atleti.length > 0) {
+            const atleta = atleti[0];
+            const statistiche = await partitaDAO.getStatisticheAtleta(conn, atleta.ID_atleta);
+            
+            const atletaCompleto = {
+                ...atleta,
+                Numero_partite: statistiche.Numero_partite || 0,
+                Totale_punti: statistiche.Totale_punti || 0,
+                Media: statistiche.Media != null ? parseFloat(Number(statistiche.Media).toFixed(2)) : 0
+            };
+            
+            res.json([atletaCompleto]);
+        } else {
+            res.json(atleti);
+        }
+        
         await conn.commit();
     } catch (error) {
         console.error(`routes/utenti.js:`, error.message, error.stack);

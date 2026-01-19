@@ -13,9 +13,9 @@ export class PallaService {
   constructor(
     private http: HttpClient, private session: SessionService, private atletaService: AtletaService) {}
 
-  // GET /palle?ID_atleta=123 - Recupera palle di un atleta
+  // GET /palle/:ID_atleta - Recupera palle di un atleta
   getByAtleta(idAtleta: number): Observable<Palla[]> {
-    return this.http.get<Palla[]>(`${this.baseUrl}?ID_atleta=${idAtleta}`);
+    return this.http.get<Palla[]>(`${this.baseUrl}/${idAtleta}`);
   }
 
   // POST /palle - Crea nuova palla

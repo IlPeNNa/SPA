@@ -38,22 +38,31 @@ export class InfoProfiloComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.sessionService.getLoggedUser();
+    console.log('Utente loggato:', user);
     if (!user) {
       this.router.navigate(['/home']);
       return;
     }
+    console.log('Carico profilo per ID_utente:', user.ID_utente);
     this.caricaProfilo(user.ID_utente);
   }
 
   caricaProfilo(idUtente: number): void {
     this.loading = true;
+    console.log('Chiamata API con ID_utente:', idUtente);
     this.atletaService.getByUserId(idUtente).subscribe({
       next: (data: any) => {
-        this.atleta = data;
-        // Costruisci URL foto usando Nome_Cognome
-        if (this.atleta?.Nome && this.atleta?.Cognome) {
-          const nomeFile = `${this.atleta.Nome}_${this.atleta.Cognome}`;
-          this.fotoUrl = `/images/players/${nomeFile}.jpg`;
+        console.log('Risposta API:', data);
+        // getByUserId ritorna un array, prendi il primo elemento
+        const atleti = Array.isArray(data) ? data : [data];
+        if (atleti.length > 0) {
+          this.atleta = atleti[0];
+          console.log('Atleta caricato:', this.atleta);
+          // Costruisci URL foto usando Nome_Cognome
+          if (this.atleta?.Nome && this.atleta?.Cognome) {
+            const nomeFile = `${this.atleta.Nome}_${this.atleta.Cognome}`;
+            this.fotoUrl = `/images/players/${nomeFile}.jpg`;
+          }
         }
         this.loading = false;
       },

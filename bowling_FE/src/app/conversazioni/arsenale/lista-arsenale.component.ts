@@ -27,6 +27,7 @@ export class ListaArsenaleComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.sessionService.getLoggedUser();
+    console.log('Utente loggato (arsenale):', user);
     if (!user) {
       this.router.navigate(['/home']);
       return;
@@ -36,19 +37,30 @@ export class ListaArsenaleComponent implements OnInit {
 
   caricaArsenale(idUtente: number): void {
     this.loading = true;
+    console.log('Carico arsenale per ID_utente:', idUtente);
     this.atletaService.getByUserId(idUtente).subscribe({
-      next: (atleta: any) => {
-        this.idAtleta = atleta.ID_atleta;
-        this.pallaService.getByAtleta(atleta.ID_atleta).subscribe({
-          next: (palle: Palla[]) => {
-            this.palle = palle;
-            this.loading = false;
-          },
-          error: (err: any) => {
-            console.error('Errore caricamento palle:', err);
-            this.loading = false;
-          }
-        });
+      next: (data: any) => {
+        console.log('Risposta atleta:', data);
+        // getByUserId ritorna un array, prendi il primo elemento
+        const atleti = Array.isArray(data) ? data : [data];
+        if (atleti.length > 0) {
+          this.idAtleta = atleti[0].ID_atleta;
+          console.log('ID_atleta trovato:', this.idAtleta);
+          this.pallaService.getByAtleta(atleti[0].ID_atleta).subscribe({
+            next: (palle: Palla[]) => {
+              console.log('Palle ricevute:', palle);
+              this.palle = palle;
+              this.loading = false;
+            },
+            error: (err: any) => {
+              console.error('Errore caricamento palle:', err);
+              this.loading = false;
+            }
+          });
+        } else {
+          console.log('Nessun atleta trovato');
+          this.loading = false;
+        }
       },
       error: (err: any) => {
         console.error('Errore caricamento atleta:', err);

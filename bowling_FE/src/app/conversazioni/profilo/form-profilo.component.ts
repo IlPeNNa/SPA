@@ -52,15 +52,20 @@ export class FormProfiloComponent implements OnInit {
     this.loading = true;
     this.atletaService.getByUserId(idUtente).subscribe({
       next: (data: any) => {
-        this.atleta = {
-          ID_atleta: data.ID_atleta,
-          Nome: data.Nome,
-          Cognome: data.Cognome,
-          Data_nascita: this.formatDateForInput(data.Data_nascita),
-          Sesso: data.Sesso,
-          Braccio_dominante: data.Braccio_dominante,
-          Stile_gioco: data.Stile_gioco
-        };
+        // getByUserId ritorna un array, prendi il primo elemento
+        const atleti = Array.isArray(data) ? data : [data];
+        if (atleti.length > 0) {
+          const atletaData = atleti[0];
+          this.atleta = {
+            ID_atleta: atletaData.ID_atleta,
+            Nome: atletaData.Nome,
+            Cognome: atletaData.Cognome,
+            Data_nascita: this.formatDateForInput(atletaData.Data_nascita),
+            Sesso: atletaData.Sesso,
+            Braccio_dominante: atletaData.Braccio_dominante,
+            Stile_gioco: atletaData.Stile_gioco
+          };
+        }
         this.loading = false;
       },
       error: (err: any) => {

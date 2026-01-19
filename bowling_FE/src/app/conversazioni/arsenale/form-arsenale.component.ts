@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PallaService } from '../../servizi/palla.service';
+import { AtletaService } from '../../servizi/atleta.service';
+import { SessionService } from '../../servizi/session.service';
 import { Palla } from '../../modelli/palla.model';
 
 @Component({
@@ -10,17 +12,17 @@ import { Palla } from '../../modelli/palla.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './form-arsenale.component.html',
-  styleUrl: './form-arsenale.component.css'
+  styleUrl:'./form-arsenale.component.css'
 })
 export class FormArsenaleComponent implements OnInit {
   palla: Partial<Palla> = {
     Marca_palla: '',
     Nome_palla: '',
-    Nucleo: 'Simmetrtico',
+    Nucleo: 'Simmetrico', 
     Peso: 15,
     RG: 0,
-    Diff: 0,
-    PSA: 0
+    Differenziale: 0,
+    PSA: null
   };
   modifica = false;
   loading = false;
@@ -28,21 +30,57 @@ export class FormArsenaleComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private pallaService: PallaService
+    private pallaService: PallaService,
+    private atletaService: AtletaService,
+    private sessionService: SessionService
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.modifica = true;
-      // Per la modifica, dovremmo caricare i dati della palla
-      // Ma il servizio non ha un metodo getById, quindi usiamo un workaround
-      this.loading = true;
-      // Nota: questo richiederà l'implementazione di un metodo getById nel service
-      // Per ora assumiamo che l'ID sia disponibile
-      this.palla.ID_palla = +id;
-      this.loading = false;
+      this.caricaPalla(+id);
     }
+  }
+
+  caricaPalla(idPalla: number): void {
+    this.loading = true;
+    const user = this.sessionService.getLoggedUser();
+    if (!user) {
+      this.router.navigate(['/home']);
+      return;
+    }
+
+    this.atletaService.getByUserId(user.ID_utente).subscribe({
+      next: (data: any) => {
+        const atleti = Array.isArray(data) ? data : [data];
+        if (atleti.length > 0) {
+          const idAtleta = atleti[0].ID_atleta;
+          this.pallaService.getByAtleta(idAtleta).subscribe({
+            next: (palle: Palla[]) => {
+              const pallaCorrente = palle.find(p => p.ID_palla === idPalla);
+              if (pallaCorrente) {
+                this.palla = { ...pallaCorrente };
+              } else {
+                alert('Palla non trovata');
+                this.router.navigate(['/arsenale']);
+              }
+              this.loading = false;
+            },
+            error: (err: any) => {
+              console.error('Errore caricamento palle:', err);
+              this.loading = false;
+              this.router.navigate(['/arsenale']);
+            }
+          });
+        }
+      },
+      error: (err: any) => {
+        console.error('Errore caricamento atleta:', err);
+        this.loading = false;
+        this.router.navigate(['/arsenale']);
+      }
+    });
   }
 
   salva(): void {

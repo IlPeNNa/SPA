@@ -3,10 +3,10 @@ export interface Palla {
     ID_atente: number;
     Marca_palla: string;
     Nome_palla: string;
-    Nucleo: 'Simmetrtico' | 'Asimmetrico';
+    Nucleo: 'Simmetrico' | 'Asimmetrico';
     Peso: number; // in libbre
     RG: number;
-    Diff: number;
-    PSA: number;
+    Differenziale: number;
+    PSA: number | null; // Solo per palle con nucleo Asimmetrico
     Deleted: 'Y' | 'N';
 }

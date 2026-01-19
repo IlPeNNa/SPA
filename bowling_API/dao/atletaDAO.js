@@ -88,10 +88,16 @@ const deleteAtleta = async function (connection, ID_atleta) {
   return (result.affectedRows > 0);
 }
 
-const getAllAtleti = async function (connection) {
+const getAllAtleti = async function (connection, filtri = {}) {
     
-  const sql = "SELECT * FROM atleta WHERE Deleted = 'N'";
+  let sql = "SELECT * FROM atleta WHERE Deleted = 'N'";
   const params = [];
+
+  // Filtra per ID_utente se fornito
+  if (filtri.ID_utente) {
+    sql += " AND ID_utente = ?";
+    params.push(parseInt(filtri.ID_utente));
+  }
 
   const rows = await db.execute(connection, sql, params);
 
