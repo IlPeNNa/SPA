@@ -27,7 +27,32 @@ const findUserById = async function (connection, ID_utente) {
   return (!rows ? [] : rows);
 }
 
+const createUtente = async function (connection, utente) {
+
+  const sql = `INSERT INTO utente (ID_utente, Username, Password, Permessi, Deleted)
+               VALUES (?, ?, ?, ?, ?)`;
+  
+  const params = [utente.ID_utente, utente.Username, utente.Password, utente.Permessi, 'N'];
+  
+  const result = await db.execute(connection, sql, params);
+  
+  if (result.affectedRows == 0) return null;
+  else return utente;
+}
+
+const deleteUtente = async function (connection, ID_utente) {
+  
+  const sql = "UPDATE utente SET Deleted = 'Y' WHERE ID_utente = ?";
+  const params = [ID_utente];
+  
+  const result = await db.execute(connection, sql, params);
+  
+  return (result.affectedRows > 0);
+}
+
 module.exports = {
     findUsers,
-    findUserById
+    findUserById,
+    createUtente,
+    deleteUtente
 };

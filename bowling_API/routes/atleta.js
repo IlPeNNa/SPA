@@ -3,6 +3,7 @@ const db = require('../services/db');
 const atletaDAO = require('../dao/atletaDAO');
 const partitaDAO = require('../dao/partitaDAO');
 const counterDAO = require('../dao/counterDAO');
+const utenteDAO = require('../dao/utenteDAO');
 
 const router = express.Router();
 
@@ -86,14 +87,51 @@ router.get('/atleti/:ID_atleta', async function(req, res) {
 
 // POST /atleti - Crea un nuovo atleta
 router.post('/atleti', async function(req, res) {
-    conn = await db.getConnection();
+    let conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        atleta = req.body;
-        nextId = await counterDAO.nextId(conn, 'atleta');
-        atleta.ID_atleta = nextId;
-        nuovoAtleta = await atletaDAO.createAtleta(conn, atleta);
+        let atleta = req.body;
+        console.log('Dati ricevuti dal frontend:', atleta);
+        
+        // Genera ID per l'atleta
+        let nextAtletaId = await counterDAO.nextId(conn, 'atleta');
+        atleta.ID_atleta = nextAtletaId;
+        
+        // Genera ID per l'utente
+        let nextUtenteId = await counterDAO.nextId(conn, 'utente');
+        
+        // Crea username e password automaticamente
+        const username = atleta.Nome + atleta.Cognome; // NomeCognome senza spazi
+        
+        // Estrai le ultime 2 cifre dell'anno dalla data di nascita
+        const dataNascita = new Date(atleta.Data_nascita);
+        const anno = dataNascita.getFullYear();
+        const ultimeDueCifre = String(anno).slice(-2);
+        
+        const password = username + ultimeDueCifre; // es: LucaRossi89
+        
+        // Crea il nuovo utente
+        const nuovoUtente = {
+            ID_utente: nextUtenteId,
+            Username: username,
+            Password: password,
+            Permessi: 'atleta'
+        };
+        
+        const utenteCreato = await utenteDAO.createUtente(conn, nuovoUtente);
+        
+        if (utenteCreato == null) {
+            await conn.rollback();
+            res.status(500);
+            return res.json({ erroreMsg: 'Errore nella creazione dell\'utente' });
+        }
+        
+        // Assegna l'ID utente all'atleta
+        atleta.ID_utente = nextUtenteId;
+        
+        // Crea l'atleta
+        let nuovoAtleta = await atletaDAO.createAtleta(conn, atleta);
         if (nuovoAtleta != null) {
             res.status(201);
             res.json(nuovoAtleta);
@@ -137,14 +175,32 @@ router.put('/atleti/:ID_atleta', async function(req, res) {
 
 // DELETE /atleti/:ID_atleta - Cancella un atleta (soft delete)
 router.delete('/atleti/:ID_atleta', async function(req, res) {
-    conn = await db.getConnection();
+    let conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        const success = await atletaDAO.deleteAtleta(conn, req.params.ID_atleta);
+        // Prima recupera l'ID_utente dell'atleta
+        const atleta = await atletaDAO.getAtletaById(conn, req.params.ID_atleta);
+        
+        if (!atleta || atleta.length === 0) {
+            await conn.rollback();
+            res.status(404);
+            return res.json({ erroreMsg: 'Atleta non trovato' });
+        }
+        
+        const idUtente = atleta[0].ID_utente;
+        
+        // Elimina l'atleta
+        const successAtleta = await atletaDAO.deleteAtleta(conn, req.params.ID_atleta);
+        
+        // Elimina anche l'utente associato
+        if (successAtleta && idUtente) {
+            await utenteDAO.deleteUtente(conn, idUtente);
+        }
+        
         await conn.commit();
-        if (success) {
-            res.status(200).json({ message: 'Atleta cancellato con successo' });
+        if (successAtleta) {
+            res.status(200).json({ message: 'Atleta e utente cancellati con successo' });
         } else {
             res.status(404).json({ erroreMsg: 'Atleta non trovato' });
         }

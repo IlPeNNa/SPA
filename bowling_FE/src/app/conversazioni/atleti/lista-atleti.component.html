@@ -1,15 +1,14 @@
-<section class="lista-atleti">
-  <h2>Lista Atleti</h2>
+<section class="clearfix">
+  
+  <header class="clearfix">
+    <h2>Lista Atleti</h2>
+  </header>
 
-  <div class="azioni">
-    <button routerLink="/atleti/nuovo" class="btn-nuovo">+ Nuovo Atleta</button>
-  </div>
+  <button *ngIf="isAdmin" routerLink="/atleti/nuovo" class="btn-nuovo">+ Nuovo Atleta</button>
+</section>
 
-  <div *ngIf="loading" class="loading">Caricamento in corso...</div>
-
-  <div *ngIf="errore" class="errore">{{ errore }}</div>
-
-  <table *ngIf="!loading && !errore && atleti.length > 0">
+<section class="lista-atleti clearfix">
+  <table *ngIf="atleti.length > 0; else inizio">
     <thead>
       <tr>
         <th (click)="ordinaPer('Nome')">Nome</th>
@@ -18,7 +17,7 @@
         <th (click)="ordinaPer('Stile_gioco')">Stile di Gioco</th>
         <th (click)="ordinaPer('Braccio_dominante')">Braccio Dominante</th>
         <th (click)="ordinaPer('Sesso')">Sesso</th>
-        <th *ngIf="isAdmin">Azioni</th>
+        <th *ngIf="isAdmin">Azioni Admin</th>
       </tr>
     </thead>
     <tbody>
@@ -36,8 +35,8 @@
       </tr>
     </tbody>
   </table>
-
-  <div *ngIf="!loading && !errore && atleti.length === 0" class="nessun-dato">
-    Nessun atleta trovato. <a routerLink="/atleti/nuovo">Crea il primo atleta</a>
-  </div>
 </section>
+
+  <ng-template #inizio>
+    <span> Nessun atleta trovato... <a routerLink="/atleti/nuovo">Inserisci il primo atleta</a></span>
+  </ng-template>

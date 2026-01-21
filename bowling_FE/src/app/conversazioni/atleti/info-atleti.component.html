@@ -1,13 +1,6 @@
 <div class="info-container">
-  <div *ngIf="loading" class="loading">
-    Caricamento informazioni atleta...
-  </div>
 
-  <div *ngIf="!loading && !atleta" class="nessun-atleta">
-    Atleta non trovato.
-  </div>
-
-  <div *ngIf="!loading && atleta" class="atleta-dettaglio">
+  <div *ngIf="!loading && atleta" class="info-atleta">
     <div class="header-section">
       <h2>{{ atleta.Nome }} {{ atleta.Cognome }}</h2>
       <button *ngIf="isAdmin" class="btn-modifica" (click)="modificaAtleta()">

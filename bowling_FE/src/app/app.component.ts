@@ -40,7 +40,11 @@ export class AppComponent {
     this.userService.getUserByUsername(this.Username).subscribe({
       next: (users: Utente[]) => {
         let user:Utente=users[0];
-        if (user && user.Password === this.Password) {
+        if (!user) {
+          this.errore = 'Utente non trovato';
+        } else if (user.Deleted === 'Y') {
+          this.errore = 'Utente disabilitato';
+        } else if (user.Password === this.Password) {
           this.session.setLoggedUser(user);
           this.loggedUser=this.session.getLoggedUser();
           this.router.navigate(['/atleti']);

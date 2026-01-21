@@ -43,7 +43,7 @@ header nav a {
 
 header nav a:hover,
 header nav a.active {
-  color: #f9dcb4 !important;
+  color: #f9dcb4;
   background: linear-gradient(#621900, #822100) !important;
 }
 
@@ -85,7 +85,7 @@ header nav a.active {
   overflow: hidden;
   padding: 6px 12px 0px 7px;
   width: 120px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 /* Messaggi di errore */
@@ -93,19 +93,19 @@ header nav a.active {
   color: white;
   float: left;
   padding: 0px 15px 0px 7px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 /* Messaggio benvenuto */
 .login span {
   color: white;
-  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   float: right;
   padding: 0px 15px 0px 7px;
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
-/* Main */
 main {
   /*background-color: #fff;*/
   padding: 0px 10px;

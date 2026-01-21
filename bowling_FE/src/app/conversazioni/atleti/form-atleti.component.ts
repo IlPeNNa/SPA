@@ -16,30 +16,19 @@ import { Atleta } from '../../modelli/atleta.model';
 export class FormAtletiComponent implements OnInit {
   atleta: Partial<Atleta> = {};
   modifica = false;
-  isAdmin = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private atletaService: AtletaService,
-    private sessionService: SessionService
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router, private atletaService: AtletaService, private sessionService: SessionService) {}
 
   ngOnInit() {
-    // Verifica se l'utente è admin
-    this.isAdmin = this.sessionService.isAdmin();
-    if (!this.isAdmin) {
-      alert('Accesso negato: solo gli admin possono gestire gli atleti');
-      this.router.navigate(['/atleti']);
-      return;
-    }
-
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.modifica = true;
       this.atletaService.getAtletaById(+id).subscribe({
         next: (data) => {
           this.atleta = { ...data };
+          if (this.atleta.Data_nascita) {
+            this.atleta.Data_nascita = this.atleta.Data_nascita.toString().slice(0, 10);
+          }
         },
         error: (err) => {
           console.error('Errore caricamento atleta:', err);
@@ -50,11 +39,6 @@ export class FormAtletiComponent implements OnInit {
   }
 
   salva() {
-    if (!this.isAdmin) {
-      alert('Accesso negato');
-      return;
-    }
-
     const payload = this.atleta as Atleta;
     if (this.modifica && payload.ID_atleta != null) {
       this.atletaService.update(payload.ID_atleta, payload).subscribe({

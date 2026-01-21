@@ -25,11 +25,7 @@ export class InfoAtletiComponent implements OnInit {
   isAdmin: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private atletaService: AtletaService,
-    private sessionService: SessionService
-  ) {}
+    private route: ActivatedRoute, private router: Router, private atletaService: AtletaService, private sessionService: SessionService) {}
 
   ngOnInit(): void {
     this.isAdmin = this.sessionService.isAdmin();

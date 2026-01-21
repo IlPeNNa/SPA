@@ -14,7 +14,6 @@ import { Atleta } from '../../modelli/atleta.model';
 })
 export class ListaAtletiComponent implements OnInit {
   atleti: Atleta[] = [];
-  loading: boolean = true;
   errore: string = '';
   isAdmin: boolean = false;
   colonnaOrdinamento: string = '';
@@ -42,11 +41,6 @@ export class ListaAtletiComponent implements OnInit {
       let valA = a[colonna as keyof Atleta];
       let valB = b[colonna as keyof Atleta];
 
-      // Gestisci valori nulli/undefined
-      if (valA == null || valB == null) {
-        return (valA == null ? 1 : 0) - (valB == null ? 1 : 0);
-      }
-
       // Converti a numero se è una stringa che rappresenta una data
       if (colonna === 'Data_nascita') {
         valA = new Date(valA).getTime() as any;
@@ -65,15 +59,12 @@ export class ListaAtletiComponent implements OnInit {
   }
 
   caricaAtleti() {
-    this.loading = true;
     this.atletaService.getAllAtleti().subscribe({
       next: (atleti) => {
         this.atleti = atleti;
-        this.loading = false;
       },
       error: (err) => {
         this.errore = 'Errore nel caricamento degli atleti';
-        this.loading = false;
       }
     });
   }
@@ -83,11 +74,6 @@ export class ListaAtletiComponent implements OnInit {
   }
 
   eliminaAtleta(idAtleta: number): void {
-    if (!this.isAdmin) {
-      alert('Solo gli admin possono eliminare atleti');
-      return;
-    }
-
     if (confirm('Sei sicuro di voler eliminare questo atleta?')) {
       this.atletaService.delete(idAtleta).subscribe({
         next: () => {
