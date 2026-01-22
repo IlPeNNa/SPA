@@ -1,19 +1,11 @@
 <div class="tornei-container">
-  <h2>Lista Tornei</h2>
+  <h1>Lista Tornei</h1>
 
-  <div *ngIf="loading" class="loading">
-    Caricamento tornei...
-  </div>
-
-  <div *ngIf="!loading && tornei.length === 0" class="nessun-torneo">
-    Nessun torneo disponibile.
-  </div>
-
-  <div *ngIf="!loading && tornei.length > 0" class="lista-tornei">
+  <article *ngIf="tornei.length > 0; else nessunTorneo" class="lista-tornei">
     <div *ngFor="let torneo of tornei" class="torneo-card" (click)="visualizzaRisultati(torneo.ID_torneo)">
       <div class="torneo-header">
-        <h3>{{ torneo.Nome_torneo }}</h3>
-        <span class="categoria-badge">{{ torneo.Categoria }}</span>
+        <h2>{{ torneo.Nome_torneo }}</h2>
+        <span class="categoria">{{ torneo.Categoria }}</span>
       </div>
       <div class="torneo-info">
         <p><strong>Data:</strong> {{ torneo.Data_inizio | date:'dd/MM/yyyy' }} - {{ torneo.Data_fine | date:'dd/MM/yyyy' }}</p>
@@ -23,5 +15,12 @@
         <span class="link-risultati">Visualizza risultati →</span>
       </div>
     </div>
-  </div>
+  </article>
+
+  <ng-template #nessunTorneo>
+    <section class="no-tornei">
+      <span>Nessun torneo disponibile al momento.</span>
+    </section>
+  </ng-template>
+
 </div>

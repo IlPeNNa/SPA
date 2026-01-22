@@ -4,13 +4,12 @@
   margin: 0 auto;
 }
 
-h2 {
+h1 {
   text-align: center;
   margin-bottom: 30px;
   color: #333;
 }
 
-.loading,
 .nessun-risultato {
   text-align: center;
   padding: 40px;
@@ -19,10 +18,8 @@ h2 {
 }
 
 .tabella-wrapper {
-  overflow-x: auto;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  margin-bottom: 15px;
+  border-radius: 6px;
 }
 
 .tabella-risultati {
@@ -46,7 +43,7 @@ h2 {
   letter-spacing: 0.5px;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .tabella-risultati th:hover {
@@ -100,7 +97,7 @@ h2 {
 
 .totale {
   font-weight: bold;
-  background-color: #e8f4f8;
+  background-color: #d2eff8;
   color: #2980b9;
   font-size: 1.05rem;
 }
@@ -143,21 +140,4 @@ h2 {
 
 .btn-indietro:hover {
   background-color: #2980b9;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .risultati-container {
-    padding: 10px;
-  }
-
-  .tabella-risultati th,
-  .tabella-risultati td {
-    padding: 8px 4px;
-    font-size: 0.85rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
 }

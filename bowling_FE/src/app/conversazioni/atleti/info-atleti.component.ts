@@ -20,7 +20,6 @@ interface AtletaConStatistiche extends Atleta {
 })
 export class InfoAtletiComponent implements OnInit {
   atleta: AtletaConStatistiche | null = null;
-  loading: boolean = true;
   fotoUrl: string = '';
   isAdmin: boolean = false;
 
@@ -36,7 +35,6 @@ export class InfoAtletiComponent implements OnInit {
   }
 
   caricaAtleta(id: number): void {
-    this.loading = true;
     this.atletaService.getAtletaById(id).subscribe({
       next: (data) => {
         this.atleta = data;
@@ -45,11 +43,9 @@ export class InfoAtletiComponent implements OnInit {
           const nomeFile = `${this.atleta.Nome}_${this.atleta.Cognome}`;
           this.fotoUrl = `/images/players/${nomeFile}.jpg`;
         }
-        this.loading = false;
       },
       error: (err) => {
         console.error('Errore caricamento atleta:', err);
-        this.loading = false;
       }
     });
   }
@@ -64,7 +60,7 @@ export class InfoAtletiComponent implements OnInit {
     this.router.navigate(['/atleti']);
   }
 
-  onFotoError(): void {
+  fotoError(): void {
     // Nasconde l'immagine se non esiste
     this.fotoUrl = '';
   }

@@ -41,20 +41,20 @@ export class ListaAtletiComponent implements OnInit {
       let valA = a[colonna as keyof Atleta];
       let valB = b[colonna as keyof Atleta];
 
-      // Converti a numero se è una stringa che rappresenta una data
-      if (colonna === 'Data_nascita') {
-        valA = new Date(valA).getTime() as any;
-        valB = new Date(valB).getTime() as any;
-      } 
-      // Converti a maiuscolo se è stringa
-      else if (typeof valA === 'string') {
-        valA = valA.toUpperCase() as any;
-        valB = (valB as string).toUpperCase() as any;
+      if (typeof valA === 'string' && typeof valB === 'string') {
+        const confronto = valA.localeCompare(valB, 'it', {
+          sensitivity: 'base'
+        });
+      return this.ordineAscendente ? confronto : -confronto;
       }
 
-      // Confronta i valori
-      const risultato = valA > valB ? 1 : valA < valB ? -1 : 0;
-      return this.ordineAscendente ? risultato : -risultato;
+      if (valA instanceof Date && valB instanceof Date) {
+        const confronto = valA.getTime() - valB.getTime();
+        return this.ordineAscendente ? confronto : -confronto;
+      }
+
+    return 0;
+    
     });
   }
 

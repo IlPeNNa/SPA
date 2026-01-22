@@ -19,19 +19,16 @@ interface RisultatoAtleta {
   templateUrl: './risultati-torneo.component.html',
   styleUrl: './risultati-torneo.component.css'
 })
+
 export class RisultatiTorneoComponent implements OnInit {
   risultati: RisultatoAtleta[] = [];
   numeroPartite: number = 0;
   idTorneo: number = 0;
-  loading: boolean = true;
   colonnaOrdinamento: string = '';
   ordineAscendente: boolean = true;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private torneoService: TorneoService
-  ) {}
+    private route: ActivatedRoute, private router: Router, private torneoService: TorneoService) {}
 
   ngOnInit(): void {
     // Recupera l'ID del torneo dalla route
@@ -42,7 +39,6 @@ export class RisultatiTorneoComponent implements OnInit {
   }
 
   caricaRisultati(): void {
-    this.loading = true;
     this.torneoService.getDettagli(this.idTorneo).subscribe({
       next: (data) => {
         this.risultati = data;
@@ -55,11 +51,9 @@ export class RisultatiTorneoComponent implements OnInit {
         }
         // Ordina per totale decrescente
         this.risultati.sort((a, b) => b.Totale - a.Totale);
-        this.loading = false;
       },
       error: (err) => {
         console.error('Errore nel caricamento dei risultati:', err);
-        this.loading = false;
       }
     });
   }
@@ -71,7 +65,14 @@ export class RisultatiTorneoComponent implements OnInit {
 
   // Genera un array per l'ngFor delle partite
   getNumeriPartite(): number[] {
-    return Array.from({ length: this.numeroPartite }, (_, i) => i + 1);
+    const arrayVuoto = new Array(this.numeroPartite);
+    const risultato = [];
+
+    for (let i = 0; i < arrayVuoto.length; i++) {
+      risultato.push(i + 1);
+    }
+
+    return risultato;
   }
 
   // Torna alla lista dei tornei
@@ -93,20 +94,20 @@ export class RisultatiTorneoComponent implements OnInit {
       let valA = a[colonna as keyof RisultatoAtleta];
       let valB = b[colonna as keyof RisultatoAtleta];
 
-      // Gestisci valori nulli/undefined
-      if (valA == null || valB == null) {
-        return (valA == null ? 1 : 0) - (valB == null ? 1 : 0);
+      if (typeof valA === 'string' && typeof valB === 'string') {
+        const confronto = valA.localeCompare(valB, 'it', {
+          sensitivity: 'base'
+        });
+
+      return this.ordineAscendente ? confronto : -confronto;
       }
 
-      // Converti a maiuscolo se è stringa
-      if (typeof valA === 'string') {
-        valA = valA.toUpperCase() as any;
-        valB = (valB as string).toUpperCase() as any;
+      if (typeof valA === 'number' && typeof valB === 'number') {
+      return this.ordineAscendente ? valA - valB : valB - valA;
       }
 
-      // Confronta i valori
-      const risultato = valA > valB ? 1 : valA < valB ? -1 : 0;
-      return this.ordineAscendente ? risultato : -risultato;
+      return 0;
+
     });
   }
 }

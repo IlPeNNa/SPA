@@ -1,21 +1,19 @@
 <div class="info-container">
 
-  <div *ngIf="!loading && atleta" class="info-atleta">
-    <div class="header-section">
-      <h2>{{ atleta.Nome }} {{ atleta.Cognome }}</h2>
+  <div *ngIf="atleta" class="info-atleta">
+
+    <section class="header-section">
+      <h1>{{ atleta.Nome }} {{ atleta.Cognome }}</h1>
       <button *ngIf="isAdmin" class="btn-modifica" (click)="modificaAtleta()">
         Modifica Atleta
       </button>
-    </div>
+    </section>
 
-    <div class="content-section">
-      <div class="foto-section">
-        <img 
-          *ngIf="fotoUrl" 
-          [src]="fotoUrl" 
+    <section class="content-section">
+      <div class="foto">
+        <img *ngIf="fotoUrl" [src]="fotoUrl" 
           [alt]="atleta.Nome + ' ' + atleta.Cognome"
-          (error)="onFotoError()"
-          class="foto-atleta"
+          (error)="fotoError()" class="foto-atleta"
         />
         <div *ngIf="!fotoUrl" class="no-foto">
           <span class="icona-placeholder">📷</span>
@@ -23,8 +21,8 @@
         </div>
       </div>
 
-      <div class="info-section">
-        <h3>Informazioni Personali</h3>
+      <section class="info-section">
+        <h2>Info Atleta</h2>
         
         <div class="info-grid">
           <div class="info-item">
@@ -48,8 +46,8 @@
           </div>
         </div>
 
-        <div *ngIf="atleta.Numero_partite !== undefined" class="statistiche-section">
-          <h3>Statistiche</h3>
+        <div *ngIf="atleta.Numero_partite !== 0 else noStats" class="statistiche-section">
+          <h2>Statistiche</h2>
           <div class="info-grid">
             <div class="info-item">
               <label>Partite Giocate:</label>
@@ -63,12 +61,18 @@
 
             <div class="info-item">
               <label>Media:</label>
-              <span class="media-badge">{{ atleta.Media }}</span>
+              <span>{{ atleta.Media }}</span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+        <ng-template #noStats>
+          <section class="vuoto-statistiche">
+            <span> Nessuna statistica disponibile...</span>
+          </section>
+        </ng-template>
+      </section>
+    </section>
 
     <button class="btn-indietro" (click)="tornaAllaLista()">
       ← Torna alla lista atleti

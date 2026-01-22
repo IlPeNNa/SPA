@@ -1,15 +1,8 @@
 <div class="risultati-container">
-  <h2>Risultati Torneo</h2>
 
-  <div *ngIf="loading" class="loading">
-    Caricamento risultati...
-  </div>
+  <h1>Risultati Torneo</h1>
 
-  <div *ngIf="!loading && risultati.length === 0" class="nessun-risultato">
-    Nessun risultato disponibile per questo torneo.
-  </div>
-
-  <div *ngIf="!loading && risultati.length > 0" class="tabella-wrapper">
+  <section *ngIf="risultati.length > 0; else nessunRisultato" class="tabella-wrapper">
     <table class="tabella-risultati">
       <thead>
         <tr>
@@ -27,10 +20,10 @@
           <td class="posizione">{{ i + 1 }}</td>
           <td>{{ atleta.Nome }}</td>
           <td>{{ atleta.Cognome }}</td>
-          <td *ngFor="let num of getNumeriPartite()" class="punteggio" [ngClass]="{
-            'perfect': getPunteggioPartita(atleta, num) === 300,
-            'high-score': getPunteggioPartita(atleta, num) >= 250 && getPunteggioPartita(atleta, num) < 300
-          }">
+          <td *ngFor="let num of getNumeriPartite()" class="punteggio"
+              [ngClass]="{'perfect': getPunteggioPartita(atleta, num) === 300,
+              'high-score': getPunteggioPartita(atleta, num) >= 250 && 
+              getPunteggioPartita(atleta, num) < 300}">
             {{ getPunteggioPartita(atleta, num) }}
           </td>
           <td class="totale">{{ atleta.Totale }}</td>
@@ -45,7 +38,14 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </section>
 
-  <button class="btn-indietro" (click)="tornaIndietro()">Torna alla lista tornei</button>
+  <ng-template #nessunRisultato>
+    <section class="no-risultati">
+      <span>Nessun risultato disponibile per questo torneo.</span>
+    </section>
+  </ng-template>
+
+  <button class="btn-indietro" (click)="tornaIndietro()">← Torna alla lista tornei</button>
+
 </div>
