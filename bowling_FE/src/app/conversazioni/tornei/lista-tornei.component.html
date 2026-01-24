@@ -1,25 +1,61 @@
 <div class="tornei-container">
+  
   <h1>Lista Tornei</h1>
+  
+  <section class="strumenti-tornei">
+    <div class="filtri">
+      <div class="filtro-gruppo">
+        <label for="filtroCategoria">Categoria:</label>
+        <select id="filtroCategoria" [(ngModel)]="filtroCategoria" (change)="applicaFiltri()">
+          <option value="">Tutte</option>
+          <option value="Esordiente">Esordiente</option>
+          <option value="Cadetto">Cadetto</option>
+          <option value="Eccellenza">Eccellenza</option>
+          <option value="Professionista">Professionista</option>
+        </select>
+      </div>
+      
+      <div class="filtro-gruppo">
+        <label for="filtroPartite">N. Partite:</label>
+        <select id="filtroPartite" [(ngModel)]="filtroPartite" (change)="applicaFiltri()">
+          <option value="">Tutte</option>
+          <option value="1-3">1-3 partite</option>
+          <option value="4-6">4-6 partite</option>
+          <option value="7+">7+ partite</option>
+        </select>
+      </div>
+    </div>
 
-  <article *ngIf="tornei.length > 0; else nessunTorneo" class="lista-tornei">
-    <div *ngFor="let torneo of tornei" class="torneo-card" (click)="visualizzaRisultati(torneo.ID_torneo)">
+    <button *ngIf="isAdmin" routerLink="/tornei/nuovo" class="btn-nuovo">+ Nuovo Torneo</button>
+  </section>
+
+  <article *ngIf="torneiVisualizzati.length > 0; else nessunTorneo" class="lista-tornei">
+    <div *ngFor="let torneo of torneiVisualizzati" class="torneo-card" (click)="visualizzaRisultati(torneo.ID_torneo)">
+
       <div class="torneo-header">
         <h2>{{ torneo.Nome_torneo }}</h2>
         <span class="categoria">{{ torneo.Categoria }}</span>
       </div>
+
       <div class="torneo-info">
         <p><strong>Data:</strong> {{ torneo.Data_inizio | date:'dd/MM/yyyy' }} - {{ torneo.Data_fine | date:'dd/MM/yyyy' }}</p>
         <p><strong>Partite:</strong> {{ torneo.Numero_partite }}</p>
       </div>
+
       <div class="torneo-footer">
         <span class="link-risultati">Visualizza risultati →</span>
+        <div *ngIf="isAdmin" class="icona-modifica" (click)="modificaTorneo($event, torneo.ID_torneo)">
+          ✏️
+          <span class="hover-modifica">Modifica</span>
+        </div>
       </div>
+
     </div>
   </article>
 
   <ng-template #nessunTorneo>
     <section class="no-tornei">
-      <span>Nessun torneo disponibile al momento.</span>
+      <span>Nessun torneo disponibile...</span>
     </section>
   </ng-template>
 

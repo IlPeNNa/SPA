@@ -16,11 +16,7 @@ export class FormTorneiComponent implements OnInit {
   torneo: Partial<Torneo> = {};
   modifica = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private torneoService: TorneoService
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router, private torneoService: TorneoService) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -32,11 +28,26 @@ export class FormTorneiComponent implements OnInit {
           const torneoTrovato = tornei.find(t => t.ID_torneo === +id);
           if (torneoTrovato) {
             this.torneo = { ...torneoTrovato };
+            if (this.torneo.Data_inizio) {
+              this.torneo.Data_inizio = this.torneo.Data_inizio.toString().slice(0, 10);
+            }
+            if (this.torneo.Data_fine) {
+              this.torneo.Data_fine = this.torneo.Data_fine.toString().slice(0, 10);
+            }
           }
         },
         error: (err) => console.error('Errore caricamento torneo:', err)
       });
     }
+  }
+
+  convertiDataPerInput(data: Date | string): any {
+    if (!data) return '';
+    const d = new Date(data);
+    const anno = d.getFullYear();
+    const mese = String(d.getMonth() + 1).padStart(2, '0');
+    const giorno = String(d.getDate()).padStart(2, '0');
+    return `${anno}-${mese}-${giorno}`;
   }
 
   salva() {

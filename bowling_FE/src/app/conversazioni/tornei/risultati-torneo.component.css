@@ -6,11 +6,12 @@
 
 h1 {
   text-align: center;
+  text-transform: uppercase;
   margin-bottom: 30px;
   color: #333;
 }
 
-.nessun-risultato {
+.no-risultati {
   text-align: center;
   padding: 40px;
   font-size: 1.2rem;

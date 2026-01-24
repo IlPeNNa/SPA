@@ -6,9 +6,69 @@
 
 h1 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #333;
+  color: #2c2c2c;
   text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.strumenti-tornei {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.filtri {
+  display: flex;
+  gap: 20px;
+}
+
+.filtro-gruppo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filtro-gruppo label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.filtro-gruppo select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  min-width: 150px;
+}
+
+.filtro-gruppo select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.btn-nuovo {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-nuovo:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
@@ -71,7 +131,9 @@ h2 {
 }
 
 .torneo-footer {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .link-risultati {
@@ -82,4 +144,43 @@ h2 {
 
 .torneo-card:hover .link-risultati {
   text-decoration: underline;
+}
+
+.icona-modifica {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  color: white;
+}
+
+.icona-modifica:hover {
+  transform: rotate(5deg);
+}
+
+.hover-modifica {
+  position: absolute;
+  bottom: 35px;
+  right: 0;
+  background-color: #333;
+  color: white;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.hover-modifica::after {
+  right: 10px;
+  border: 6px solid transparent;
+  border-top-color: #333;
+}
+
+.icona-modifica:hover .hover-modifica {
+  opacity: 1;
+  visibility: visible;
 }
