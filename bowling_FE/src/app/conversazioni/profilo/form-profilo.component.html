@@ -1,42 +1,20 @@
 <section class="profilo-form">
-  <div *ngIf="loading" class="loading">
-    <div class="spinner"></div>
-    <p>Caricamento dati...</p>
-  </div>
 
-  <div *ngIf="!loading">
     <h2>✏️ Modifica il tuo Profilo</h2>
 
     <form #form="ngForm" (ngSubmit)="salva()">
-      <div class="form-row">
+      <div class="nome-cognome">
         <label>Nome:
-          <input 
-            name="nome" 
-            [(ngModel)]="atleta.Nome" 
-            required 
-            minlength="2"
-            placeholder="Inserisci il tuo nome"
-          />
+          <input name="nome" [(ngModel)]="atleta.Nome" required minlength="2"/>
         </label>
 
         <label>Cognome:
-          <input 
-            name="cognome" 
-            [(ngModel)]="atleta.Cognome" 
-            required 
-            minlength="2"
-            placeholder="Inserisci il tuo cognome"
-          />
+          <input name="cognome" [(ngModel)]="atleta.Cognome" required minlength="2"/>
         </label>
       </div>
 
       <label>Data di Nascita:
-        <input 
-          name="data_nascita" 
-          [(ngModel)]="atleta.Data_nascita" 
-          type="date" 
-          required 
-        />
+        <input name="data_nascita" [(ngModel)]="atleta.Data_nascita" type="date" required/>
       </label>
 
       <label>Sesso:
@@ -54,15 +32,13 @@
       </label>
 
       <label>Stile di Gioco:
-        <input 
-          name="stile" 
-          [(ngModel)]="atleta.Stile_gioco" 
-          required 
-          placeholder="Es: Stroker, Tweener, Cranker"
-        />
+        <select name="stile" [(ngModel)]="atleta.Stile_gioco" required>
+          <option value="Tradizionale">Tradizionale</option>
+          <option value="Bimane">Bimane</option>
+        </select>
       </label>
 
-      <div class="form-actions">
+      <div class="form-buttons">
         <button type="submit" [disabled]="form.invalid">
           💾 Salva Modifiche
         </button>
@@ -72,5 +48,4 @@
       </div>
     </form>
 
-  </div>
 </section>

@@ -10,9 +10,10 @@ interface AtletaModifica {
   Nome: string;
   Cognome: string;
   Data_nascita: string;
-  Sesso: string;
-  Braccio_dominante: string;
+  Sesso: 'M' | 'F';
+  Braccio_dominante: 'Dx' | 'Sx';
   Stile_gioco: string;
+  ID_utente?: number;
 }
 
 @Component({
@@ -31,13 +32,8 @@ export class FormProfiloComponent implements OnInit {
     Braccio_dominante: 'Dx',
     Stile_gioco: ''
   };
-  loading: boolean = true;
 
-  constructor(
-    private router: Router,
-    private atletaService: AtletaService,
-    private sessionService: SessionService
-  ) {}
+  constructor(private router: Router, private atletaService: AtletaService, private sessionService: SessionService) {}
 
   ngOnInit(): void {
     const user = this.sessionService.getLoggedUser();
@@ -49,10 +45,8 @@ export class FormProfiloComponent implements OnInit {
   }
 
   caricaProfilo(idUtente: number): void {
-    this.loading = true;
     this.atletaService.getByUserId(idUtente).subscribe({
       next: (data: any) => {
-        // getByUserId ritorna un array, prendi il primo elemento
         const atleti = Array.isArray(data) ? data : [data];
         if (atleti.length > 0) {
           const atletaData = atleti[0];
@@ -60,22 +54,21 @@ export class FormProfiloComponent implements OnInit {
             ID_atleta: atletaData.ID_atleta,
             Nome: atletaData.Nome,
             Cognome: atletaData.Cognome,
-            Data_nascita: this.formatDateForInput(atletaData.Data_nascita),
+            Data_nascita: this.formatoDataForm(atletaData.Data_nascita),
             Sesso: atletaData.Sesso,
             Braccio_dominante: atletaData.Braccio_dominante,
-            Stile_gioco: atletaData.Stile_gioco
+            Stile_gioco: atletaData.Stile_gioco,
+            ID_utente: atletaData.ID_utente
           };
         }
-        this.loading = false;
       },
       error: (err: any) => {
         console.error('Errore caricamento profilo:', err);
-        this.loading = false;
       }
     });
   }
 
-  formatDateForInput(date: string | Date): string {
+  formatoDataForm(date: string | Date): string {
     const d = new Date(date);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -85,7 +78,18 @@ export class FormProfiloComponent implements OnInit {
 
   salva(): void {
     if (this.atleta.ID_atleta) {
-      this.atletaService.update(this.atleta.ID_atleta, this.atleta as any).subscribe({
+      const AtletaModifica = {
+        Nome: this.atleta.Nome,
+        Cognome: this.atleta.Cognome,
+        Data_nascita: this.atleta.Data_nascita,
+        Sesso: this.atleta.Sesso,
+        Braccio_dominante: this.atleta.Braccio_dominante,
+        Stile_gioco: this.atleta.Stile_gioco,
+        ID_utente: this.atleta.ID_utente,
+        ID_atleta: this.atleta.ID_atleta
+      };
+      
+      this.atletaService.update(this.atleta.ID_atleta, AtletaModifica).subscribe({
         next: () => {
           this.router.navigate(['/profilo']);
         },
