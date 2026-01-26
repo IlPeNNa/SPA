@@ -69,10 +69,6 @@ export class ListaAtletiComponent implements OnInit {
     });
   }
 
-  visualizzaInfo(idAtleta: number): void {
-    this.router.navigate(['/atleti', idAtleta]);
-  }
-
   eliminaAtleta(idAtleta: number): void {
     if (confirm('Sei sicuro di voler eliminare questo atleta?')) {
       this.atletaService.delete(idAtleta).subscribe({

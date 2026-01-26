@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let atleta of atleti" (click)="visualizzaInfo(atleta.ID_atleta)" class="atleta-row">
+      <tr *ngFor="let atleta of atleti" [routerLink]="['/atleti', atleta.ID_atleta]" class="atleta-row">
         <td>{{ atleta.Nome }}</td>
         <td>{{ atleta.Cognome }}</td>
         <td>{{ atleta.Data_nascita | date:'dd/MM/yyyy' }}</td>

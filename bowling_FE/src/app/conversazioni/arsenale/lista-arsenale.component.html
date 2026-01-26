@@ -1,34 +1,16 @@
 <div class="arsenale-container">
-  <div class="header-section">
+  <div class="header">
     <h1>🎳 Il Mio Arsenale</h1>
-    <button class="btn-aggiungi" (click)="aggiungiPalla()">
+    <button class="btn-aggiungi" routerLink="/arsenale/nuovo">
       ➕ Aggiungi Nuova Palla
     </button>
   </div>
 
-  <div *ngIf="loading" class="loading">
-    <div class="spinner"></div>
-    <p>Caricamento arsenale...</p>
-  </div>
-
-  <div *ngIf="!loading && palle.length === 0" class="no-palle">
-    <div class="empty-icon">🎳</div>
-    <h3>Il tuo arsenale è vuoto</h3>
-    <p>Aggiungi la tua prima palla per iniziare!</p>
-    <button class="btn-aggiungi-empty" (click)="aggiungiPalla()">
-      ➕ Aggiungi Prima Palla
-    </button>
-  </div>
-
-  <div *ngIf="!loading && palle.length > 0" class="palle-grid">
+  <section *ngIf="palle.length > 0; else noPalle" class="elenco-palle">
     <div *ngFor="let palla of palle" class="palla-card">
       <div class="palla-image-container">
-        <img 
-          [src]="getImageUrl(palla.Nome_palla)" 
-          [alt]="palla.Nome_palla"
-          (error)="onImageError($event)"
-          class="palla-image"
-        />
+        <img [src]="getImageUrl(palla.Nome_palla)" [alt]="palla.Nome_palla"
+          (error)="onImageError($event)" class="palla-image"/>
       </div>
       
       <div class="palla-info">
@@ -63,7 +45,7 @@
       </div>
 
       <div class="palla-actions">
-        <button class="btn-modifica" (click)="modificaPalla(palla.ID_palla)">
+        <button class="btn-modifica" [routerLink]="['/arsenale/modifica', palla.ID_palla]">
           ✏️ Modifica
         </button>
         <button class="btn-elimina" (click)="eliminaPalla(palla)">
@@ -71,5 +53,10 @@
         </button>
       </div>
     </div>
-  </div>
+  </section>
+
+  <ng-template #noPalle>  
+    <h3>Il tuo arsenale è vuoto</h3>
+    <span routerLink="/arsenale/nuovo" class="noPalle">Aggiungi la tua prima palla per iniziare!</span>
+  </ng-template>
 </div>

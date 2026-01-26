@@ -1,6 +1,6 @@
 export interface Palla {
     ID_palla: number;
-    ID_atente: number;
+    ID_atleta: number;
     Marca_palla: string;
     Nome_palla: string;
     Nucleo: 'Simmetrico' | 'Asimmetrico';

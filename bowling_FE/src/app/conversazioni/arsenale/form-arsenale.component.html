@@ -1,44 +1,29 @@
 <section class="arsenale-form">
-  <div *ngIf="loading" class="loading">
-    <div class="spinner"></div>
-    <p>Caricamento dati...</p>
-  </div>
 
-  <div *ngIf="!loading">
-    <h2>{{ modifica ? '✏️ Modifica Palla' : '➕ Nuova Palla' }}</h2>
+    <h1>{{ modifica ? '✏️ Modifica Palla' : '➕ Nuova Palla' }}</h1>
 
     <form #form="ngForm" (ngSubmit)="salva()">
       <div class="form-section">
         <h3>📝 Informazioni Generali</h3>
         
         <label>Nome Palla:
-          <input 
-            name="nome" 
-            [(ngModel)]="palla.Nome_palla" 
-            required 
-            minlength="2"
-            placeholder="Es: Hyroad, Phaze II, IQ Tour"
-          />
+          <input name="nome" [(ngModel)]="palla.Nome_palla" required 
+          minlength="2" placeholder="Es: Hyroad, Phaze II, IQ Tour"/>
         </label>
 
         <label>Marca:
-          <input 
-            name="marca" 
-            [(ngModel)]="palla.Marca_palla" 
-            required 
-            minlength="2"
-            placeholder="Es: Storm, Hammer, Brunswick"
-          />
+          <input name="marca" [(ngModel)]="palla.Marca_palla" required 
+            minlength="2" placeholder="Es: Storm, Hammer, Brunswick"/>
         </label>
       </div>
 
       <div class="form-section">
-        <h3>⚙️ Caratteristiche Tecniche</h3>
+        <h2>⚙️ Caratteristiche Tecniche</h2>
         
         <div class="form-row">
           <label>Tipo Nucleo:
             <select name="nucleo" [(ngModel)]="palla.Nucleo" required>
-              <option value="Simmetrtico">Simmetrico</option>
+              <option value="Simmetrico">Simmetrico</option>
               <option value="Asimmetrico">Asimmetrico</option>
             </select>
           </label>
@@ -60,43 +45,20 @@
         
         <div class="specs-grid">
           <label>RG (Radius of Gyration):
-            <input 
-              name="rg" 
-              [(ngModel)]="palla.RG" 
-              type="number" 
-              step="0.001" 
-              min="2.0" 
-              max="3.0"
-              required 
-              placeholder="Es: 2.485"
-            />
+            <input name="rg" [(ngModel)]="palla.RG" type="number" 
+              step="0.01" min="2.0" max="3.0" required placeholder="Es: 2.485"/>
             <span class="hint">Valori tipici: 2.46 - 2.80</span>
           </label>
 
           <label>Diff (Differential):
-            <input 
-              name="differenziale" 
-              [(ngModel)]="palla.Differenziale" 
-              type="number" 
-              step="0.001" 
-              min="0.0" 
-              max="0.1"
-              required 
-              placeholder="Es: 0.052"
-            />
+            <input name="differenziale" [(ngModel)]="palla.Differenziale" type="number" 
+              step="0.001" min="0.001" max="0.1" required placeholder="Es: 0.052"/>
             <span class="hint">Valori tipici: 0.020 - 0.060</span>
           </label>
 
           <label *ngIf="palla.Nucleo === 'Asimmetrico'">PSA (Preferred Spin Axis):
-            <input 
-              name="psa" 
-              [(ngModel)]="palla.PSA" 
-              type="number" 
-              step="0.001" 
-              min="0.0" 
-              max="0.1"
-              placeholder="Es: 0.015"
-            />
+            <input name="psa" [(ngModel)]="palla.PSA" type="number" 
+              step="0.001" min="0.005" max="0.050" placeholder="Es: 0.015"/>
             <span class="hint">Valori tipici: 0.005 - 0.020</span>
           </label>
         </div>
@@ -111,5 +73,4 @@
         </button>
       </div>
     </form>
-  </div>
 </section>

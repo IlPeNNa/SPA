@@ -14,7 +14,9 @@ import { Palla } from '../../modelli/palla.model';
   templateUrl: './form-arsenale.component.html',
   styleUrl:'./form-arsenale.component.css'
 })
+
 export class FormArsenaleComponent implements OnInit {
+
   palla: Partial<Palla> = {
     Marca_palla: '',
     Nome_palla: '',
@@ -24,27 +26,14 @@ export class FormArsenaleComponent implements OnInit {
     Differenziale: 0,
     PSA: null
   };
+
   modifica = false;
-  loading = false;
+  idAtleta: number | null = null;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private pallaService: PallaService,
-    private atletaService: AtletaService,
-    private sessionService: SessionService
-  ) {}
+    private route: ActivatedRoute, private router: Router, private pallaService: PallaService, private atletaService: AtletaService, private sessionService: SessionService) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.modifica = true;
-      this.caricaPalla(+id);
-    }
-  }
-
-  caricaPalla(idPalla: number): void {
-    this.loading = true;
     const user = this.sessionService.getLoggedUser();
     if (!user) {
       this.router.navigate(['/home']);
@@ -55,51 +44,70 @@ export class FormArsenaleComponent implements OnInit {
       next: (data: any) => {
         const atleti = Array.isArray(data) ? data : [data];
         if (atleti.length > 0) {
-          const idAtleta = atleti[0].ID_atleta;
-          this.pallaService.getByAtleta(idAtleta).subscribe({
-            next: (palle: Palla[]) => {
-              const pallaCorrente = palle.find(p => p.ID_palla === idPalla);
-              if (pallaCorrente) {
-                this.palla = { ...pallaCorrente };
-              } else {
-                alert('Palla non trovata');
-                this.router.navigate(['/arsenale']);
-              }
-              this.loading = false;
-            },
-            error: (err: any) => {
-              console.error('Errore caricamento palle:', err);
-              this.loading = false;
-              this.router.navigate(['/arsenale']);
-            }
-          });
+          this.idAtleta = atleti[0].ID_atleta;
+          const id = this.route.snapshot.paramMap.get('id');
+          if (id) {
+            this.modifica = true;
+            this.caricaPalla(+id);
+          }
+        } else {
+          alert('Atleta non trovato');
+          this.router.navigate(['/arsenale']);
         }
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('Errore caricamento atleta:', err);
-        this.loading = false;
+        this.router.navigate(['/arsenale']);
+      }
+    });
+  }
+
+  caricaPalla(idPalla: number): void {
+    if (!this.idAtleta) return;
+
+    this.pallaService.getByAtleta(this.idAtleta).subscribe({
+      next: (palle: Palla[]) => {
+        const pallaCorrente = palle.find(p => p.ID_palla === idPalla);
+        if (pallaCorrente) {
+          this.palla = { ...pallaCorrente };
+        } else {
+          alert('Palla non trovata');
+          this.router.navigate(['/arsenale']);
+        }
+      },
+      error: (err) => {
+        console.error('Errore caricamento palle:', err);
         this.router.navigate(['/arsenale']);
       }
     });
   }
 
   salva(): void {
+    if (!this.idAtleta) {
+      alert('Errore: atleta non identificato');
+      return;
+    }
+
+    console.log('Dati palla:', this.palla);
+
     if (this.modifica && this.palla.ID_palla) {
+      // Modifica: usa direttamente l'oggetto palla che ha già tutti i campi
       this.pallaService.update(this.palla.ID_palla, this.palla as Palla).subscribe({
         next: () => {
           this.router.navigate(['/arsenale']);
         },
-        error: (err: any) => {
+        error: (err) => {
           console.error('Errore aggiornamento palla:', err);
           alert('Errore durante il salvataggio della palla.');
         }
       });
     } else {
+      // Creazione: il service aggiunge automaticamente ID_atleta
       this.pallaService.create(this.palla as any).subscribe({
         next: () => {
           this.router.navigate(['/arsenale']);
         },
-        error: (err: any) => {
+        error: (err) => {
           console.error('Errore creazione palla:', err);
           alert('Errore durante la creazione della palla.');
         }

@@ -3,7 +3,6 @@
   margin: 20px auto;
 }
 
-/* Error */
 .error-message {
   text-align: center;
   padding: 3rem;
@@ -12,7 +11,6 @@
   color: #c0392b;
 }
 
-/* Header Profilo */
 .profilo-header {
   display: flex;
   gap: 2rem;
@@ -194,9 +192,6 @@
   text-align: center;
   padding: 2rem;
   color: #7f8c8d;
-}
-
-.no-stats {
   margin: 0.5rem 0;
   font-size: 1.1rem;
 }

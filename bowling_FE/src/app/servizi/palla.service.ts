@@ -19,20 +19,20 @@ export class PallaService {
   }
 
   // POST /palle - Crea nuova palla
-  /*create(palla: Palla): Observable<Palla> {
-    return this.http.post<Palla>(this.baseUrl, palla);
-  }*/
-
   create(palla: Omit<Palla, 'ID_palla' | 'ID_atleta'>): Observable<Palla> {
     const loggedUser = this.session.getLoggedUser();
     if (loggedUser) {
       return this.atletaService.getByUserId(loggedUser.ID_utente).pipe(
-        switchMap(atleta => 
-          this.http.post<Palla>(this.baseUrl, {
+        switchMap(atleti => {
+          const atletiArray = Array.isArray(atleti) ? atleti : [atleti];
+          if (atletiArray.length === 0) {
+            throw new Error('Nessun atleta trovato per questo utente');
+          }
+          return this.http.post<Palla>(this.baseUrl, {
             ...palla,
-            ID_atleta: atleta.ID_atleta,
-          })
-        )
+            ID_atleta: atletiArray[0].ID_atleta,
+          });
+        })
       );
     } else throw new Error('Accesso senza utente loggato');
   }

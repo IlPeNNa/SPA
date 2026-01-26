@@ -4,8 +4,7 @@
   padding: 0 1.5rem;
 }
 
-/* Header */
-.header-section {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,7 +13,7 @@
   border-bottom: 3px solid #8b4513;
 }
 
-.header-section h1 {
+.header h1 {
   color: #8b4513;
   font-size: 2.5rem;
   margin: 0;
@@ -30,107 +29,31 @@
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+  transition: all 0.3s;
 }
 
 .btn-aggiungi:hover {
   background: linear-gradient(135deg, #229954, #1e8449);
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
 }
 
-/* Loading */
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-  gap: 1rem;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #8b4513;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Empty State */
-.no-palle {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, #fff9f0 0%, #ffffff 100%);
-  border-radius: 16px;
-  border: 2px dashed #d4a574;
-}
-
-.empty-icon {
-  font-size: 5rem;
-  margin-bottom: 1rem;
-  opacity: 0.5;
-}
-
-.no-palle h3 {
-  color: #8b4513;
-  font-size: 1.8rem;
-  margin: 1rem 0;
-}
-
-.no-palle p {
-  color: #7f6f4f;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-}
-
-.btn-aggiungi-empty {
-  background: linear-gradient(135deg, #8b4513, #a0522d);
-  color: white;
-  border: none;
-  padding: 14px 28px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
-}
-
-.btn-aggiungi-empty:hover {
-  background: linear-gradient(135deg, #a0522d, #8b4513);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(139, 69, 19, 0.4);
-}
-
-/* Palle Grid */
-.palle-grid {
+.elenco-palle {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
 }
 
-/* Palla Card */
 .palla-card {
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  transition: all 0.3s;
   display: flex;
   flex-direction: column;
 }
 
 .palla-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .palla-image-container {
@@ -149,10 +72,8 @@
   object-fit: cover;
 }
 
-/* Info */
 .palla-info {
   padding: 1.5rem;
-  flex: 1;
 }
 
 .palla-nome {
@@ -203,7 +124,6 @@
   font-weight: 700;
 }
 
-/* Specs */
 .palla-specs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -213,7 +133,7 @@
 .spec {
   background: linear-gradient(135deg, #ecf0f1 0%, #f8f9fa 100%);
   border-radius: 8px;
-  padding: 0.8rem;
+  padding: 0.5rem;
   text-align: center;
   border: 1px solid #dfe4e8;
 }
@@ -224,7 +144,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .spec-value {
@@ -234,7 +154,6 @@
   font-weight: 700;
 }
 
-/* Actions */
 .palla-actions {
   display: flex;
   gap: 0.5rem;
@@ -243,8 +162,7 @@
   border-top: 1px solid #ecf0f1;
 }
 
-.btn-modifica,
-.btn-elimina {
+.btn-modifica, .btn-elimina {
   flex: 1;
   padding: 10px 16px;
   font-size: 0.95rem;
@@ -252,7 +170,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 
 .btn-modifica {
@@ -275,23 +193,16 @@
   transform: translateY(-2px);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .header-section {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-  }
+.noPalle {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
 
-  .header-section h1 {
-    font-size: 2rem;
-  }
-
-  .btn-aggiungi {
-    width: 100%;
-  }
-
-  .palle-grid {
-    grid-template-columns: 1fr;
-  }
+h3 {
+  color: #8b4513;
+  font-size: 1.8rem;
+  text-transform: uppercase;
 }

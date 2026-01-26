@@ -30,7 +30,7 @@
   </section>
 
   <article *ngIf="torneiVisualizzati.length > 0; else nessunTorneo" class="lista-tornei">
-    <div *ngFor="let torneo of torneiVisualizzati" class="torneo-card" (click)="visualizzaRisultati(torneo.ID_torneo)">
+    <div *ngFor="let torneo of torneiVisualizzati" class="torneo-card" [routerLink]="['/tornei', torneo.ID_torneo, 'risultati']">
 
       <div class="torneo-header">
         <h2>{{ torneo.Nome_torneo }}</h2>
@@ -44,7 +44,7 @@
 
       <div class="torneo-footer">
         <span class="link-risultati">Visualizza risultati →</span>
-        <div *ngIf="isAdmin" class="icona-modifica" (click)="modificaTorneo($event, torneo.ID_torneo)">
+        <div *ngIf="isAdmin" class="icona-modifica" [routerLink]="['/tornei/modifica', torneo.ID_torneo]" (click)="$event.stopPropagation()">
           ✏️
           <span class="hover-modifica">Modifica</span>
         </div>

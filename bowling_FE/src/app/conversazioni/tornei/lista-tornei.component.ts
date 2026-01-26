@@ -40,15 +40,6 @@ export class ListaTorneiComponent implements OnInit {
     });
   }
 
-  visualizzaRisultati(torneoId: number): void {
-    this.router.navigate(['/tornei', torneoId, 'risultati']);
-  }
-
-  modificaTorneo(event: Event, torneoId: number): void {
-    event.stopPropagation();
-    this.router.navigate(['/tornei/modifica', torneoId]);
-  }
-
   applicaFiltri(): void {
     this.torneiVisualizzati = this.tornei.filter(torneo => {
       
