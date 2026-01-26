@@ -3,14 +3,12 @@ a {
   cursor: pointer;
 }
 
-/* Clearfix */
 .clearfix::after {
   content: "";
   display: table;
   clear: both;
 }
 
-/* Header */
 header {
   background: linear-gradient(#c63403, #994fd2);
 }
@@ -24,7 +22,6 @@ header h1 {
   color: black;
 }
 
-/* Navigation */
 header nav {
   float: left;
 }
@@ -47,13 +44,11 @@ header nav a.active {
   background: linear-gradient(#621900, #822100) !important;
 }
 
-/* Login */
 .login {
   float: right;
   width: 580px;
 }
 
-/* Etichette */
 .login label {
   color: white;
   float: left;
@@ -62,7 +57,6 @@ header nav a.active {
   text-transform: uppercase;
 }
 
-/* Campi di input */
 .login input[type="text"],
 .login input[type="password"] {
   float: left;
@@ -74,7 +68,6 @@ header nav a.active {
   font-size: 13px;
 }
 
-/* Bottone login */
 .login button {
   background: none;
   color: white;
@@ -88,7 +81,6 @@ header nav a.active {
   font-size: 12px;
 }
 
-/* Messaggi di errore */
 .errore {
   color: white;
   float: left;
@@ -96,7 +88,6 @@ header nav a.active {
   font-size: 12px;
 }
 
-/* Messaggio benvenuto */
 .login span {
   color: white;
   letter-spacing: 0.5px;
