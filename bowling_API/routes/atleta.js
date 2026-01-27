@@ -87,19 +87,18 @@ router.get('/atleti/:ID_atleta', async function(req, res) {
 
 // POST /atleti - Crea un nuovo atleta
 router.post('/atleti', async function(req, res) {
-    let conn = await db.getConnection();
+    conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        let atleta = req.body;
-        console.log('Dati ricevuti dal frontend:', atleta);
+        atleta = req.body;
         
         // Genera ID per l'atleta
-        let nextAtletaId = await counterDAO.nextId(conn, 'atleta');
+        nextAtletaId = await counterDAO.nextId(conn, 'atleta');
         atleta.ID_atleta = nextAtletaId;
         
         // Genera ID per l'utente
-        let nextUtenteId = await counterDAO.nextId(conn, 'utente');
+        nextUtenteId = await counterDAO.nextId(conn, 'utente');
         
         // Crea username e password automaticamente
         const username = atleta.Nome + atleta.Cognome; // NomeCognome senza spazi
@@ -131,7 +130,7 @@ router.post('/atleti', async function(req, res) {
         atleta.ID_utente = nextUtenteId;
         
         // Crea l'atleta
-        let nuovoAtleta = await atletaDAO.createAtleta(conn, atleta);
+        nuovoAtleta = await atletaDAO.createAtleta(conn, atleta);
         if (nuovoAtleta != null) {
             res.status(201);
             res.json(nuovoAtleta);
@@ -151,14 +150,16 @@ router.post('/atleti', async function(req, res) {
 
 // PUT /atleti/:ID_atleta - Modifica un atleta esistente
 router.put('/atleti/:ID_atleta', async function(req, res) {
-    conn = await db.getConnection();
+    const conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        const atletaDaModificare = { ...req.body, ID_atleta: req.params.ID_atleta };
-        const success = await atletaDAO.updateAtleta(conn, atletaDaModificare);
+        //const atletaDaModificare = { ...req.body, ID_atleta: req.params.ID_atleta };
+        const atletaDaModificare = req.body;
+        atletaDaModificare.ID_atleta = parseInt(req.params.ID_atleta);
+        const result = await atletaDAO.updateAtleta(conn, atletaDaModificare);
         await conn.commit();
-        if (success) {
+        if (result) {
             res.status(200).json({ message: 'Atleta modificato con successo' });
         } else {
             res.status(404).json({ erroreMsg: 'Atleta non trovato' });
@@ -175,11 +176,11 @@ router.put('/atleti/:ID_atleta', async function(req, res) {
 
 // DELETE /atleti/:ID_atleta - Cancella un atleta (soft delete)
 router.delete('/atleti/:ID_atleta', async function(req, res) {
-    let conn = await db.getConnection();
+    const conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        // Prima recupera l'ID_utente dell'atleta
+        // Recupera l'atleta per ottenere l'ID_utente associato
         const atleta = await atletaDAO.getAtletaById(conn, req.params.ID_atleta);
         
         if (!atleta || atleta.length === 0) {
@@ -195,15 +196,16 @@ router.delete('/atleti/:ID_atleta', async function(req, res) {
         
         // Elimina anche l'utente associato
         if (successAtleta && idUtente) {
-            await utenteDAO.deleteUtente(conn, idUtente);
+            const successUtente = await utenteDAO.deleteUtente(conn, idUtente);
         }
         
-        await conn.commit();
-        if (successAtleta) {
+        if (successAtleta && successUtente) {
             res.status(200).json({ message: 'Atleta e utente cancellati con successo' });
         } else {
             res.status(404).json({ erroreMsg: 'Atleta non trovato' });
         }
+
+        await conn.commit();
     } catch (error) {
         console.error(`routes/atleta.js:`, error.message, error.stack);
         await conn.rollback();

@@ -44,6 +44,10 @@
 
       <div class="torneo-footer">
         <span class="link-risultati">Visualizza risultati →</span>
+        <div *ngIf="isAdmin" class="icona-elimina" (click)="eliminaTorneo(torneo.ID_torneo); $event.stopPropagation()">
+          🗑️
+          <span class="hover-elimina">Elimina</span>
+        </div>
         <div *ngIf="isAdmin" class="icona-modifica" [routerLink]="['/tornei/modifica', torneo.ID_torneo]" (click)="$event.stopPropagation()">
           ✏️
           <span class="hover-modifica">Modifica</span>

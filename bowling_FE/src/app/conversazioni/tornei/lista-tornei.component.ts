@@ -13,6 +13,7 @@ import { Torneo } from '../../modelli/torneo.model';
   templateUrl: './lista-tornei.component.html',
   styleUrl: './lista-tornei.component.css'
 })
+
 export class ListaTorneiComponent implements OnInit {
   tornei: Torneo[] = [];
   torneiVisualizzati: Torneo[] = [];
@@ -66,5 +67,18 @@ export class ListaTorneiComponent implements OnInit {
       // Se passa tutti i controlli
       return true;
     });
+  }
+
+  eliminaTorneo(idTorneo: number): void {
+    if (confirm('Sei sicuro di voler eliminare questo torneo?')) {
+      this.torneoService.delete(idTorneo).subscribe({
+        next: () => {
+          this.caricaTornei(); // Ricarica la lista
+        },
+        error: (err) => {
+          alert('Errore nell\'eliminazione del torneo');
+        }
+      });
+    }
   }
 }

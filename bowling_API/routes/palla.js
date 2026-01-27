@@ -53,18 +53,22 @@ router.post('/palle', async function(req, res) {
 
 // PUT /palle/:ID_palla - Modifica una palla esistente
 router.put('/palle/:ID_palla', async function(req, res) {
-    conn = await db.getConnection();
+    const conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        const pallaDaModificare = { ...req.body, ID_palla: req.params.ID_palla };
-        const success = await pallaDAO.updatePalla(conn, pallaDaModificare);
-        await conn.commit();
-        if (success) {
+        //const pallaDaModificare = { ...req.body, ID_palla: req.params.ID_palla };
+        const pallaDaModificare = req.body;
+        pallaDaModificare.ID_palla = parseInt(req.params.ID_palla);
+
+        const result = await pallaDAO.updatePalla(conn, pallaDaModificare);
+        
+        if (result) {
             res.status(200).json({ message: 'Palla modificata con successo' });
         } else {
             res.status(404).json({ erroreMsg: 'Palla non trovata' });
         }
+        await conn.commit();
     } catch (error) {
         console.error(`routes/palla.js:`, error.message, error.stack);
         await conn.rollback();
@@ -77,17 +81,18 @@ router.put('/palle/:ID_palla', async function(req, res) {
 
 // DELETE /palle/:ID_palla - Cancella una palla (soft delete)
 router.delete('/palle/:ID_palla', async function(req, res) {
-    conn = await db.getConnection();
+    const conn = await db.getConnection();
     await conn.beginTransaction();
     res.setHeader('Content-Type', 'application/json');
     try {
-        const success = await pallaDAO.deletePalla(conn, req.params.ID_palla);
-        await conn.commit();
-        if (success) {
+        const deleted = await pallaDAO.deletePalla(conn, req.params.ID_palla);
+        
+        if (deleted) {
             res.status(200).json({ message: 'Palla cancellata con successo' });
         } else {
             res.status(404).json({ erroreMsg: 'Palla non trovata' });
         }
+        await conn.commit();
     } catch (error) {
         console.error(`routes/palla.js:`, error.message, error.stack);
         await conn.rollback();

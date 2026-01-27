@@ -12,6 +12,7 @@ import { Atleta } from '../../modelli/atleta.model';
   templateUrl: './lista-atleti.component.html',
   styleUrls: ['./lista-atleti.component.css']
 })
+
 export class ListaAtletiComponent implements OnInit {
   atleti: Atleta[] = [];
   errore: string = '';

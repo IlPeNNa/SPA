@@ -146,7 +146,7 @@ h2 {
   text-decoration: underline;
 }
 
-.icona-modifica {
+.icona-modifica, .icona-elimina {
   position: relative;
   display: flex;
   align-items: center;
@@ -157,11 +157,11 @@ h2 {
   color: white;
 }
 
-.icona-modifica:hover {
+.icona-modifica:hover, .icona-elimina:hover {
   transform: rotate(5deg);
 }
 
-.hover-modifica {
+.hover-modifica, .hover-elimina {
   position: absolute;
   bottom: 35px;
   right: 0;
@@ -174,13 +174,13 @@ h2 {
   transition: opacity 0.3s, visibility 0.3s;
 }
 
-.hover-modifica::after {
+.hover-modifica::after, .hover-elimina::after {
   right: 10px;
   border: 6px solid transparent;
   border-top-color: #333;
 }
 
-.icona-modifica:hover .hover-modifica {
+.icona-modifica:hover .hover-modifica, .icona-elimina:hover .hover-elimina {
   opacity: 1;
   visibility: visible;
 }

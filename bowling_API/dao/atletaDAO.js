@@ -110,6 +110,7 @@ const getAtletaById = async function (connection, ID_atleta) {
   const params = [ID_atleta];
 
   const rows = await db.execute(connection, sql, params);
+  
   return (!rows ? [] : rows);
 }
 

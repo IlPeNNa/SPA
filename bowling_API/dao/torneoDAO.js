@@ -60,8 +60,6 @@ const getTorneoById = async function (connection, ID_torneo) {
     return (!rows ? [] : rows);
 }
 
-//Moduli per filtrare i tornei in base a vari parametri da sviluppare poi (data, montepremi)
-
 module.exports = {
     createTorneo,
     updateTorneo,
