@@ -80,7 +80,7 @@ const updateAtleta = async function (connection, atleta) {
 
 const deleteAtleta = async function (connection, ID_atleta) {
     
-  const sql = "UPDATE atleta SET Deleted= 'Y' WHERE ID_atleta = ?";
+  const sql = "UPDATE atleta SET Deleted = 'Y' WHERE ID_atleta = ?";
   const params = [ID_atleta];
 
   const result = await db.execute(connection, sql, params);

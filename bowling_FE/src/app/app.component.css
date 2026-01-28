@@ -10,7 +10,7 @@ a {
 }
 
 header {
-  background: linear-gradient(#c63403, #994fd2);
+  background: linear-gradient(#8ec2f3, #be8ae5);
 }
 
 header h1 {
@@ -62,7 +62,7 @@ header nav a.active {
   float: left;
   height: 18px;
   width: 125px;
-  border: 1px double rgb(232, 170, 14);
+  border: 1px double rgb(51, 90, 108);
   border-radius: 2px;
   margin-top: 1px;
   font-size: 13px;
@@ -97,6 +97,5 @@ header nav a.active {
 }
 
 main {
-  /*background-color: #fff;*/
   padding: 0px 10px;
 }

@@ -29,7 +29,7 @@ const updatePalla = async function(connection, palla) {
 
 const deletePalla = async function(connection, ID_palla) {
 
-    const sql = "UPDATE palla SET Deleted= 'Y' WHERE ID_palla = ?";
+    const sql = "UPDATE palla SET Deleted = 'Y' WHERE ID_palla = ?";
     const params = [ID_palla];
     
     const result = await db.execute(connection, sql, params);

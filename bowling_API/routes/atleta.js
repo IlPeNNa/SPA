@@ -195,8 +195,9 @@ router.delete('/atleti/:ID_atleta', async function(req, res) {
         const successAtleta = await atletaDAO.deleteAtleta(conn, req.params.ID_atleta);
         
         // Elimina anche l'utente associato
+        let successUtente = true;
         if (successAtleta && idUtente) {
-            const successUtente = await utenteDAO.deleteUtente(conn, idUtente);
+            successUtente = await utenteDAO.deleteUtente(conn, idUtente);
         }
         
         if (successAtleta && successUtente) {

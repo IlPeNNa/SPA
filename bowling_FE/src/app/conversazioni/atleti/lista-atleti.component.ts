@@ -54,8 +54,7 @@ export class ListaAtletiComponent implements OnInit {
         return this.ordineAscendente ? confronto : -confronto;
       }
 
-    return 0;
-    
+      return 0;
     });
   }
 
