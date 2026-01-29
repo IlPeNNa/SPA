@@ -30,12 +30,12 @@ export class TorneoService {
   }
 
   // PUT /tornei/:ID_torneo - Modifica torneo
-  update(id: number, torneo: Torneo): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, torneo);
+  update(id: number, torneo: Torneo): Observable<Torneo> {
+    return this.http.put<Torneo>(`${this.baseUrl}/${id}`, torneo);
   }
 
   // DELETE /tornei/:ID_torneo - Cancella torneo (soft delete)
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

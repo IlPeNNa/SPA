@@ -85,8 +85,7 @@ export class FormProfiloComponent implements OnInit {
         Sesso: this.atleta.Sesso,
         Braccio_dominante: this.atleta.Braccio_dominante,
         Stile_gioco: this.atleta.Stile_gioco,
-        ID_utente: this.atleta.ID_utente,
-        ID_atleta: this.atleta.ID_atleta
+        ID_utente: this.atleta.ID_utente
       };
       
       this.atletaService.update(this.atleta.ID_atleta, AtletaModifica).subscribe({

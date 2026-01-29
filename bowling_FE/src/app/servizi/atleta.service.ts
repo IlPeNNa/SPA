@@ -29,13 +29,13 @@ export class AtletaService {
     return this.http.post<Atleta>(this.baseUrl, atleta);
   }
 
-  // PUT /atleti/:ID_atleta - Modifica atleta
-  update(id: number, atleta: Partial<Atleta>): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, atleta);
+  // PUT /atleti/:ID_atleta - Modifica atleta (accetta aggiornamenti parziali)
+  update(id: number, atleta: Partial<Atleta>): Observable<Atleta> {
+    return this.http.put<Atleta>(`${this.baseUrl}/${id}`, atleta);
   }
 
   // DELETE /atleti/:ID_atleta - Cancella atleta (soft delete)
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }
