@@ -59,7 +59,7 @@ export class ListaArsenaleComponent implements OnInit {
   }
 
   onImageError(event: any): void {
-    // Nascondi l'immagine se non trovata
+    // Nascondo l'immagine se non trovata
     event.target.style.display = 'none';
     event.target.onerror = null;
   }

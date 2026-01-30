@@ -41,7 +41,7 @@ export class FormArsenaleComponent implements OnInit {
     }
 
     this.atletaService.getByUserId(user.ID_utente).subscribe({
-      next: (data: any) => {
+      next: (data) => {
         const atleti = Array.isArray(data) ? data : [data];
         if (atleti.length > 0) {
           this.idAtleta = atleti[0].ID_atleta;
@@ -87,8 +87,6 @@ export class FormArsenaleComponent implements OnInit {
       alert('Errore: atleta non identificato');
       return;
     }
-
-    console.log('Dati palla:', this.palla);
 
     if (this.modifica && this.palla.ID_palla) {
       // Modifica: usa direttamente l'oggetto palla che ha già tutti i campi

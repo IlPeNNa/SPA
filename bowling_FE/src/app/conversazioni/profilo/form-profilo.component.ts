@@ -46,7 +46,7 @@ export class FormProfiloComponent implements OnInit {
 
   caricaProfilo(idUtente: number): void {
     this.atletaService.getByUserId(idUtente).subscribe({
-      next: (data: any) => {
+      next: (data) => {
         const atleti = Array.isArray(data) ? data : [data];
         if (atleti.length > 0) {
           const atletaData = atleti[0];
@@ -62,7 +62,7 @@ export class FormProfiloComponent implements OnInit {
           };
         }
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('Errore caricamento profilo:', err);
       }
     });
